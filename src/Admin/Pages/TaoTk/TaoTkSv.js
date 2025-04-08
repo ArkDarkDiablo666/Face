@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import './Admin.css'; // Import the CSS file
+import './TaoTkGv.css'; // Import the CSS file
 import { House, UserRound, ScanFace, UserRoundPlus, ContactRound, UsersRound, LogOut } from 'lucide-react';
 
-function Admin() {
+function TaoTkSv() {
+  const [gender, setGender] = useState('');
+
+  const handleGenderChange = (event) => {
+    setGender(event.target.value);
+  };
+
   return (
     <div className="container">
       <div style={{ display: 'flex' }}>
@@ -16,7 +22,7 @@ function Admin() {
             <MenuItem className="menu-item" href="/admin">
               <div className="icon">
                 <House />
-                <p className="title-main">Trang chủ</p>
+                <p className="title">Trang chủ</p>
               </div>
             </MenuItem>
             <MenuItem className="menu-item" href="/admin/trang-ca-nhan">
@@ -36,7 +42,7 @@ function Admin() {
                 <MenuItem className="menu-item" href="/admin/tao-tk-gv">
                   <div className="icon">
                     <UserRoundPlus />
-                    <p className="title">Giáo viên</p>
+                    <p className="title-main">Giáo viên</p>
                   </div>
                 </MenuItem>
                 <MenuItem className="menu-item" href="/admin/tao-tk-sv">
@@ -62,11 +68,50 @@ function Admin() {
           </Menu>
         </div>
         <div className="content">
-          <h1>Admin</h1>
+          <h1>TaoTkSv</h1>
+          <div className='form-tao-tk'>
+            <div className='form-trai'>
+              <p className='chu'>Mã sinh viên: </p><input className='input-tao' type='text'></input>
+              <p className='chu'>Họ tên sinh viên: </p><input className='input-tao' type='text'></input>
+              <p className='chu'>Giới tính: </p>
+              <div className='radio-group'>
+              <label>
+                <input
+                  type='radio'
+                  value='male'
+                  checked={gender === 'male'}
+                  onChange={handleGenderChange}
+                />
+                Nam
+              </label>
+              <label>
+                <input
+                  type='radio'
+                  value='female'
+                  checked={gender === 'female'}
+                  onChange={handleGenderChange}
+                />
+                Nữ
+              </label>
+              </div>
+              <p className='chu'>Ngày sinh: </p><input className='input-tao' type='date'></input>
+              <p className='chu'>Số điện thoại: </p><input className='input-tao' type='text'></input>
+            </div>
+            <div className='content'>
+              <p className='chu'>Mã khoa: </p><input className='input-tao' type='text'></input>
+              <p className='chu'>Mã ngành: </p><input className='input-tao' type='text'></input>
+              <p className='chu'>Mã lớp: </p><input className='input-tao' type='text'></input>
+              <p className='chu'>Email: </p><input className='input-tao' type='email'></input>
+              <p className='chu'>Mật khẩu: </p><input className='input-tao' type='password'></input>
+            </div>
+          </div>
+          <div className='button-form'>
+            <button className='button-tao'>Tạo</button>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export default Admin;
+export default TaoTkSv;

@@ -12,8 +12,9 @@ import TrangCaNhanU from './User/Pages/TrangCaNhanU';
 import TrangCaNhanA from './Admin/Pages/TrangCaNhanA';
 import TrangCaNhanG from './Guest/Pages/TrangCaNhanG';
 import DiemDanhA from './Admin/Pages/DiemDanhA';
-import TaiKhoan from './Admin/Pages/QuanLiTk/TaiKhoan';
-import TaoTk from './Admin/Pages/QuanLiTk/TaoTk';
+import TaiKhoan from './Admin/Pages/TaiKhoan';
+import TaoTkGv from './Admin/Pages/TaoTk/TaoTkGv';
+import TaoTkSv from './Admin/Pages/TaoTk/TaoTkSv';
 import Xem from './Guest/Pages/Xem';
 function App() {
   return (
@@ -22,11 +23,13 @@ function App() {
         <Route path="/" element={<DauVao />} />
         <Route path="/dangnhap" element={<DangNhap />} />
         <Route path="/quen-mat-khau" element={<QuenMatKhau />} />
+
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/diem-danh" element={<DiemDanhA />} />
         <Route path="/admin/trang-ca-nhan" element={<TrangCaNhanA />} />
         <Route path="/admin/tai-khoan" element={<TaiKhoan />} />
-        <Route path="/admin/tao-tk" element={<TaoTk />} />
+        <Route path="/admin/tao-tk-gv" element={<TaoTkGv />} />
+        <Route path="/admin/tao-tk-sv" element={<TaoTkSv />} />
 
         <Route path="/user" element={<User />} />
         <Route path="/user/diem-danh" element={<DiemDanhU />} />
@@ -35,7 +38,6 @@ function App() {
         <Route path="/guest" element={<Guest />} />
         <Route path="/guest/trang-ca-nhan" element={<TrangCaNhanG />} />
         <Route path="/guest/xem" element={<Xem />} />
-        
       </Routes>
     </Router>
   );

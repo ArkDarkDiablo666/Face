@@ -1,120 +1,72 @@
 import React from 'react';
 import { Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import styled from 'styled-components';
+import './TrangCaNhanA.css'; // Import the CSS file
 import { House, UserRound, ScanFace, UserRoundPlus, ContactRound, UsersRound, LogOut } from 'lucide-react';
-
 
 function TrangCaNhanA() {
   return (
-    <Container>
+    <div className="container">
       <div style={{ display: 'flex' }}>
-          <SideMenu>
-              <Menu>
-                <Icon>
-                  <img src="meme.png" alt="Logo" style={{ width: '50px', height: '50px' }} />
-                  <Title>Face ID</Title>
-                </Icon>
-                  <MenuItemStyled href = "/admin">
-                  <Icon>
-                    <House />
-                    <Title>Trang chủ</Title>
-                  </Icon>
-                  </MenuItemStyled>
-                  <MenuItemStyled href = "/admin/trang-ca-nhan">
-                  <Icon>
-                    <UserRound />
-                    <TitleMain>Thông tin cá nhân</TitleMain>
-                  </Icon>
-                  </MenuItemStyled>
-                    <SubMenu label = {<Title>Quản lí tài khoản</Title>} icon = {<Icon><UsersRound /></Icon>}>
-                      <SubMenuBar>
-                        <MenuItemStyled href = "/admin/tai-khoan">
-                        <Icon>
-                          <ContactRound />
-                          <Title>Danh sách tài khoản</Title>
-                        </Icon>
-                        </MenuItemStyled>
-                        <MenuItemStyled href = "/admin/tao-tk">
-                        <Icon>
-                          <UserRoundPlus />
-                          <Title>Tạo tài khoản</Title>
-                        </Icon>
-                        </MenuItemStyled>
-                      </SubMenuBar>
-                    </SubMenu>
-                  <MenuItemStyled href = "/admin/diem-danh">
-                  <Icon>
-                    <ScanFace />
-                    <Title>Điểm danh</Title>
-                  </Icon>
-                  </MenuItemStyled>
-                  <MenuItemStyled href = "/dangnhap">
-                  <Icon>
-                    <LogOut />
-                    <Title>Đăng xuất</Title>
-                  </Icon>
-                  </MenuItemStyled>
-               </Menu>
-          </SideMenu>
-          <Content>
-          <h1>Trang cá nhân</h1>
-          </Content>
+        <div className="side-menu">
+          <Menu>
+            <div className="icon">
+              <img src="/meme.png" alt="Logo" style={{ width: '50px', height: '50px' }} />
+              <p className="label">Face ID</p>
+            </div>
+            <MenuItem className="menu-item" href="/admin">
+              <div className="icon">
+                <House />
+                <p className="title">Trang chủ</p>
+              </div>
+            </MenuItem>
+            <MenuItem className="menu-item" href="/admin/trang-ca-nhan">
+              <div className="icon">
+                <UserRound />
+                <p className="title-main">Thông tin cá nhân</p>
+              </div>
+            </MenuItem>
+            <MenuItem className="menu-item" href="/admin/tai-khoan">
+              <div className="icon">
+                <ContactRound />
+                <p className="title">Danh sách tài khoản</p>
+              </div>
+            </MenuItem>
+            <SubMenu label={<p className="title">Tạo tài khoản</p>} icon={<div className="icon"><UsersRound /></div>}>
+              <div className="sub-menu-bar">
+                <MenuItem className="menu-item" href="/admin/tao-tk-gv">
+                  <div className="icon">
+                    <UserRoundPlus />
+                    <p className="title">Giáo viên</p>
+                  </div>
+                </MenuItem>
+                <MenuItem className="menu-item" href="/admin/tao-tk-sv">
+                  <div className="icon">
+                    <UserRoundPlus />
+                    <p className="title">Sinh viên</p>
+                  </div>
+                </MenuItem>
+              </div>
+            </SubMenu>
+            <MenuItem className="menu-item" href="/admin/diem-danh">
+              <div className="icon">
+                <ScanFace />
+                <p className="title">Điểm danh</p>
+              </div>
+            </MenuItem>
+            <MenuItem className="menu-item" href="/dangnhap">
+              <div className="icon">
+                <LogOut />
+                <p className="title">Đăng xuất</p>
+              </div>
+            </MenuItem>
+          </Menu>
+        </div>
+        <div className="content">
+          <h1>TrangCaNhanA</h1>
+        </div>
       </div>
-    </Container>
+    </div>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  height: 100vh;
-  background-color: #CBF1F5;
-  color: rgb(0, 0, 0);
-  padding: 10 10 10 20px; 
-  position: relative;
-`;
-
-const SideMenu = styled.div`
-  width: 280px;
-  height: 100vh;
-  background-color: #A6E3E9; /* Màu nền cho sidebar */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Đổ bóng cho sidebar */
-`;
-
-const Content = styled.div`
-  flex: 1;
-  padding: 20px;
-`;
-
-const Icon = styled.div`
-  display: flex; /* Sử dụng Flexbox để căn giữa */
-  align-items: center; /* Căn giữa theo chiều dọc */
-  margin: 10px 0; /* Thêm khoảng cách giữa các mục */
-  cursor: pointer;
-`;
-
-const Title = styled.p`
-  font-weight: bold;
-  font-size: 18px;
-  color: #333; /* Màu chữ */
-  margin-left: 10px; /* Khoảng cách giữa biểu tượng và tiêu đề */
-  text-align: left; /* Căn trái nội dung */
-`;
-
-const TitleMain = styled(Title)`
-  font-weight: bold;
-  font-size: 21px;
-`;
-
-const MenuItemStyled = styled(MenuItem)`
-  &:hover {
-    background-color: #E3FDFD; /* Hiệu ứng hover cho menu item */
-  }
-`;
-
-const SubMenuBar = styled.div`
-  background-color: #71C9CE;
-`;
 
 export default TrangCaNhanA;

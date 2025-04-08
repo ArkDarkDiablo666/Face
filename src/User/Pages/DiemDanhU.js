@@ -1,100 +1,49 @@
 // src/trangchu/DashboardGuest.js
 import React from 'react';
 import { Menu, MenuItem } from 'react-pro-sidebar';
-import styled from 'styled-components';
+import './DiemDanhU.css'; // Nhập tệp CSS
 import { House, UserRound, ScanFace, LogOut } from 'lucide-react';
 
 function DiemDanhU() {
   return (
-    <Container>
-      <div style={{ display: 'flex' }}>
-        <SideMenu>
+    <div className="container">
+        <div className="side-menu">
           <Menu>
-            <Icon>
-              <img src="meme.png" alt="Logo" style={{ width: '50px', height: '50px' }} />
-              <Title>Face ID</Title>
-            </Icon>
-            <MenuItemStyled href="/user">
-              <Icon>
+            <div className="icon">
+              <img src="/meme.png" alt="Logo" style={{ width: '50px', height: '50px' }} />
+              <p className="label">Face ID</p>
+            </div>
+            <MenuItem className="menu-item" href="/user">
+              <div className="icon">
                 <House />
-                <Title>Trang chủ</Title>
-              </Icon>
-            </MenuItemStyled>
-            <MenuItemStyled href="/user/trang-ca-nhan">
-              <Icon>
-                <UserRound  />
-                <Title>Thông tin cá nhân</Title>
-              </Icon>
-            </MenuItemStyled>
-            <MenuItemStyled href="/user/diem-danh">
-              <Icon>
+                <p className="title">Trang chủ</p>
+              </div>
+            </MenuItem>
+            <MenuItem className="menu-item" href="/user/trang-ca-nhan">
+              <div className="icon">
+                <UserRound />
+                <p className="title">Thông tin cá nhân</p>
+              </div>
+            </MenuItem>
+            <MenuItem className="menu-item" href="/user/diem-danh">
+              <div className="icon">
                 <ScanFace />
-                <TitleMain>Điểm danh</TitleMain>
-              </Icon>
-            </MenuItemStyled>
-            <MenuItemStyled href="/dangnhap">
-              <Icon>
+                <p className="title-main">Điểm danh</p>
+              </div>
+            </MenuItem>
+            <MenuItem className="menu-item" href="/dangnhap">
+              <div className="icon">
                 <LogOut />
-                <Title>Đăng xuất</Title>
-              </Icon>
-            </MenuItemStyled>
+                <p className="title">Đăng xuất</p>
+              </div>
+            </MenuItem>
           </Menu>
-        </SideMenu>
-        <Content>
-          <h1>Điểm danh</h1>
-        </Content>
-      </div>
-    </Container>
+        </div>
+        <div className="content">
+          <h1>User</h1>
+        </div>
+    </div>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  height: 100vh;
-  background-color: #CBF1F5;
-  color: rgb(0, 0, 0);
-  padding: 10 10 10 20px; 
-  position: relative;
-`;
-
-const SideMenu = styled.div`
-  width: 280px;
-  height: 100vh;
-  background-color: #A6E3E9; /* Màu nền cho sidebar */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Đổ bóng cho sidebar */
-`;
-
-const Content = styled.div`
-  flex: 1;
-  padding: 20px;
-`;
-
-const Icon = styled.div`
-  display: flex; /* Sử dụng Flexbox để căn giữa */
-  align-items: center; /* Căn giữa theo chiều dọc */
-  margin: 10px 0; /* Thêm khoảng cách giữa các mục */
-  cursor: pointer;
-`;
-
-const Title = styled.p`
-  font-weight: bold;
-  font-size: 18px;
-  color: #333; /* Màu chữ */
-  margin-left: 10px; /* Khoảng cách giữa biểu tượng và tiêu đề */
-  text-align: left; /* Căn trái nội dung */
-`;
-
-const TitleMain = styled(Title)`
-  font-weight: bold;
-  font-size: 21px;
-`;
-
-const MenuItemStyled = styled(MenuItem)`
-  &:hover {
-    background-color: #E3FDFD; /* Hiệu ứng hover cho menu item */
-  }
-`;
 
 export default DiemDanhU;

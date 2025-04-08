@@ -1,9 +1,9 @@
 import React from 'react';
 import { Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import './Admin.css'; // Import the CSS file
+import './TaiKhoan.css'; // Import the CSS file
 import { House, UserRound, ScanFace, UserRoundPlus, ContactRound, UsersRound, LogOut } from 'lucide-react';
 
-function Admin() {
+function TaiKhoan() {
   return (
     <div className="container">
       <div style={{ display: 'flex' }}>
@@ -16,7 +16,7 @@ function Admin() {
             <MenuItem className="menu-item" href="/admin">
               <div className="icon">
                 <House />
-                <p className="title-main">Trang chủ</p>
+                <p className="title">Trang chủ</p>
               </div>
             </MenuItem>
             <MenuItem className="menu-item" href="/admin/trang-ca-nhan">
@@ -28,7 +28,7 @@ function Admin() {
             <MenuItem className="menu-item" href="/admin/tai-khoan">
               <div className="icon">
                 <ContactRound />
-                <p className="title">Danh sách tài khoản</p>
+                <p className="title-main">Danh sách tài khoản</p>
               </div>
             </MenuItem>
             <SubMenu label={<p className="title">Tạo tài khoản</p>} icon={<div className="icon"><UsersRound /></div>}>
@@ -62,11 +62,11 @@ function Admin() {
           </Menu>
         </div>
         <div className="content">
-          <h1>Admin</h1>
+          <h1>TaiKhoan</h1>
         </div>
       </div>
     </div>
   );
 }
 
-export default Admin;
+export default TaiKhoan;
