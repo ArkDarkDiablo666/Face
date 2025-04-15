@@ -16,6 +16,11 @@ import TaiKhoan from './Admin/Pages/TaiKhoan';
 import TaoTkGv from './Admin/Pages/TaoTk/TaoTkGv';
 import TaoTkSv from './Admin/Pages/TaoTk/TaoTkSv';
 import Xem from './Guest/Pages/Xem';
+import TaoKhoa from './Admin/Pages/Tao-dulieu/TaoKhoa';
+import TaoLop from './Admin/Pages/Tao-dulieu/TaoLop';
+import TaoNganh from './Admin/Pages/Tao-dulieu/TaoNganh';
+
+
 function App() {
   return (
     <Router>
@@ -30,6 +35,9 @@ function App() {
         <Route path="/admin/tai-khoan" element={<TaiKhoan />} />
         <Route path="/admin/tao-tk-gv" element={<TaoTkGv />} />
         <Route path="/admin/tao-tk-sv" element={<TaoTkSv />} />
+        <Route path="/admin/tao-khoa" element={<TaoKhoa />} />
+        <Route path="/admin/tao-lop" element={<TaoLop />} />
+        <Route path="/admin/tao-nganh" element={<TaoNganh />} />
 
         <Route path="/user" element={<User />} />
         <Route path="/user/diem-danh" element={<DiemDanhU />} />

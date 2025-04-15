@@ -1,78 +1,108 @@
-import cv2
-import face_recognition
 import os
-import numpy as np
+import cv2
 import pickle
+import face_recognition
+import numpy as np
 
-def load_images_from_folders(root_path):
+# Cấu hình đường dẫn
+IMAGE_DIR = r"F:\Image"
+ENCODING_DIR = r"F:\encodings"
+FINAL_ENCODING_FILE = os.path.join(ENCODING_DIR, "encodings.pkl")
+TEMP_ENCODING_FILE = os.path.join(ENCODING_DIR, "temp.pkl")
+CACHED_LABELS_FILE = os.path.join(ENCODING_DIR, "cached_labels.pkl")
+
+# Tạo thư mục encodings nếu chưa tồn tại 
+os.makedirs(ENCODING_DIR, exist_ok=True)
+
+def load_images_from_folder(folder):
     images = []
     labels = []
-    
-    for person_name in os.listdir(root_path):
-        person_path = os.path.join(root_path, person_name)
-        if not os.path.isdir(person_path):
-            continue  # Bỏ qua nếu không phải thư mục
-        
-        for image_name in os.listdir(person_path):
-            image_path = os.path.join(person_path, image_name)
-            image = cv2.imread(image_path)
-            if image is None:
-                print(f"Lỗi: Không thể đọc ảnh {image_name} trong thư mục {person_name}")
-                continue
-            images.append(image)
-            labels.append(person_name)  # Gán nhãn là tên thư mục
-    
+    for filename in os.listdir(folder):
+        if filename.lower().endswith(('.png', '.jpg', '.jpeg')):
+            path = os.path.join(folder, filename)
+            img = cv2.imread(path)
+            if img is not None:
+                images.append(img)
+                labels.append(os.path.basename(folder))
     return images, labels
 
 def encode_faces(images, labels):
-    encodeList = []
-    labelList = []
-    
-    for idx, img in enumerate(images):
-        if img is None or img.size == 0:
-            print(f"Lỗi: Ảnh thứ {idx} không hợp lệ hoặc bị trống.")
-            continue
-        try:
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            encodings = face_recognition.face_encodings(img)
-            if len(encodings) > 0:
-                encodeList.append(encodings[0])
-                labelList.append(labels[idx])
-            else:
-                print(f"Lỗi: Không tìm thấy khuôn mặt trong ảnh thứ {idx}. Bỏ qua ảnh này.")
-        except Exception as e:
-            print(f"Lỗi xử lý ảnh thứ {idx}: {e}")
-    
-    return encodeList, labelList
+    encode_list = []
+    encode_labels = []
+    for img, label in zip(images, labels):
+        rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        faces = face_recognition.face_locations(rgb_img)
+        encodes = face_recognition.face_encodings(rgb_img, faces)
+        for encode in encodes:
+            encode_list.append(encode)
+            encode_labels.append(label)
+    return encode_list, encode_labels
 
-# Đoạn 1: Mã hóa và lưu dữ liệu nếu có thay đổi
-root_path = r"F:\Image"
-cached_file = r"F:\encodings.pkl"
-cached_labels_file = r"F:\labels.pkl"
+def save_pickle(data, path):
+    with open(path, "wb") as f:
+        pickle.dump(data, f)
 
-needs_update = True
-if os.path.exists(cached_labels_file):
-    with open(cached_labels_file, "rb") as f:
-        old_labels = pickle.load(f)
-    
-    current_labels = set(os.listdir(root_path))
-    if current_labels == set(old_labels):
-        needs_update = False
+def load_pickle(path):
+    with open(path, "rb") as f:
+        return pickle.load(f)
 
-if needs_update:
-    images, labels = load_images_from_folders(root_path)
-    print(f"Đã tải {len(images)} ảnh từ {len(set(labels))} thư mục.")
-    encodeListKnown, labelList = encode_faces(images, labels)
-    
-    with open(cached_file, "wb") as f:
-        pickle.dump((encodeListKnown, labelList), f)
-    with open(cached_labels_file, "wb") as f:
-        pickle.dump(labels, f)
-    print("Mã hóa và lưu khuôn mặt thành công!")
+def merge_encodings(base_file, new_encodings, new_labels):
+    if os.path.exists(base_file):
+        old_encodings, old_labels = load_pickle(base_file)
+    else:
+        old_encodings, old_labels = [], []
+
+    merged_encodings = old_encodings + new_encodings
+    merged_labels = old_labels + new_labels
+
+    save_pickle((merged_encodings, merged_labels), base_file)
+    print(f"[+] Gộp {len(new_labels)} khuôn mặt vào {base_file}")
+
+# Đọc danh sách nhãn đã xử lý trước đó
+processed_labels = []
+if os.path.exists(CACHED_LABELS_FILE):
+    processed_labels = load_pickle(CACHED_LABELS_FILE)
+
+# Danh sách nhãn hiện tại
+current_labels = os.listdir(IMAGE_DIR)
+new_labels = [label for label in current_labels if label not in processed_labels]
+
+if not new_labels:
+    print("✅ Không có nhãn mới.")
 else:
-    print("Không có thay đổi, sử dụng dữ liệu đã mã hóa.")
+    print(f"🔍 Phát hiện nhãn mới: {new_labels}")
 
-# Đoạn 2: Nhận diện từ video
+    all_new_encodings = []
+    all_new_labels = []
+
+    for person in new_labels:
+        person_folder = os.path.join(IMAGE_DIR, person)
+        images, labels = load_images_from_folder(person_folder)
+        encodings, labels = encode_faces(images, labels)
+
+        all_new_encodings.extend(encodings)
+        all_new_labels.extend(labels)
+
+    # Nếu có dữ liệu mới
+    if all_new_encodings:
+        # Lưu tạm vào temp.pkl
+        save_pickle((all_new_encodings, all_new_labels), TEMP_ENCODING_FILE)
+        print(f"💾 Đã lưu tạm {len(all_new_labels)} khuôn mặt vào temp.pkl")
+
+        # Gộp vào encodings.pkl chính
+        merge_encodings(FINAL_ENCODING_FILE, all_new_encodings, all_new_labels)
+
+        # Xoá file tạm
+        if os.path.exists(TEMP_ENCODING_FILE):
+            os.remove(TEMP_ENCODING_FILE)
+            print("🗑️ Đã xoá temp.pkl sau khi gộp")
+
+        # Cập nhật nhãn đã xử lý
+        processed_labels += new_labels
+        save_pickle(processed_labels, CACHED_LABELS_FILE)
+        print(f"✅ Đã cập nhật cached_labels.pkl")
+    else:
+        print("⚠️ Không phát hiện được khuôn mặt hợp lệ trong ảnh mới.")
 
 def recognize_faces_from_video(encodeListKnown, labelList, video_source=0):
     cap = cv2.VideoCapture(video_source)
@@ -92,7 +122,7 @@ def recognize_faces_from_video(encodeListKnown, labelList, video_source=0):
         face_locations = face_recognition.face_locations(frameS)
         encode_current_frame = face_recognition.face_encodings(frameS, face_locations)
         
-        for encodeFace, faceLoc in zip(encode_curfrent_frame, face_locations):
+        for encodeFace, faceLoc in zip(encode_current_frame, face_locations):
             matches = face_recognition.compare_faces(encodeListKnown, encodeFace)
             faceDis = face_recognition.face_distance(encodeListKnown, encodeFace)
             matchIndex = np.argmin(faceDis) if len(faceDis) > 0 else None
@@ -115,7 +145,7 @@ def recognize_faces_from_video(encodeListKnown, labelList, video_source=0):
     cv2.destroyAllWindows()
 
 # Load dữ liệu đã mã hóa từ file
-with open(cached_file, "rb") as f:
+with open(FINAL_ENCODING_FILE, "rb") as f:
     encodeListKnown, labelList = pickle.load(f)
 
 recognize_faces_from_video(encodeListKnown, labelList)

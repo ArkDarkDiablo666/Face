@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import './TaoTkGv.css'; // Import the CSS file
-import { House, UserRound, ScanFace, UserRoundPlus, ContactRound, UsersRound, LogOut } from 'lucide-react';
+import { House, UserRound, ScanFace, UserRoundPlus, ContactRound, UsersRound, LogOut, CircleFadingPlus, FolderPlus } from 'lucide-react';
 
 function TaoTkSv() {
   const [gender, setGender] = useState('');
@@ -53,6 +53,28 @@ function TaoTkSv() {
                 </MenuItem>
               </div>
             </SubMenu>
+            <SubMenu label={<p className="title">Tạo</p>} icon={<div className="icon"><FolderPlus /></div>}>
+              <div className="sub-menu-bar">
+                <MenuItem className="menu-item" href="/admin/tao-khoa">
+                  <div className="icon">
+                    <CircleFadingPlus />
+                    <p className="title">Khoa</p>
+                  </div>
+                </MenuItem>
+                <MenuItem className="menu-item" href="/admin/tao-nganh">
+                  <div className="icon">
+                    <CircleFadingPlus />
+                    <p className="title">Ngành</p>
+                  </div>
+                </MenuItem>
+                <MenuItem className="menu-item" href="/admin/tao-lop">
+                  <div className="icon">
+                    <CircleFadingPlus />
+                    <p className="title">Lớp</p>
+                  </div>
+                </MenuItem>
+              </div>
+            </SubMenu>
             <MenuItem className="menu-item" href="/admin/diem-danh">
               <div className="icon">
                 <ScanFace />
@@ -71,37 +93,36 @@ function TaoTkSv() {
           <h1>TaoTkSv</h1>
           <div className='form-tao-tk'>
             <div className='form-trai'>
-              <p className='chu'>Mã sinh viên: </p><input className='input-tao' type='text'></input>
               <p className='chu'>Họ tên sinh viên: </p><input className='input-tao' type='text'></input>
               <p className='chu'>Giới tính: </p>
-              <div className='radio-group'>
-              <label>
-                <input
-                  type='radio'
-                  value='male'
-                  checked={gender === 'male'}
-                  onChange={handleGenderChange}
-                />
-                Nam
-              </label>
-              <label>
-                <input
-                  type='radio'
-                  value='female'
-                  checked={gender === 'female'}
-                  onChange={handleGenderChange}
-                />
-                Nữ
-              </label>
-              </div>
+                <div className='radio-group'>
+                <label>
+                  <input
+                    type='radio'
+                    value='male'
+                    checked={gender === 'male'}
+                    onChange={handleGenderChange}
+                  />
+                  Nam
+                </label>
+                <label>
+                  <input
+                    type='radio'
+                    value='female'
+                    checked={gender === 'female'}
+                    onChange={handleGenderChange}
+                  />
+                  Nữ
+                </label>
+                </div>
               <p className='chu'>Ngày sinh: </p><input className='input-tao' type='date'></input>
               <p className='chu'>Số điện thoại: </p><input className='input-tao' type='text'></input>
+              <p className='chu'>Email: </p><input className='input-tao' type='email'></input>
             </div>
-            <div className='content'>
+            <div className='form-phai'>
               <p className='chu'>Mã khoa: </p><input className='input-tao' type='text'></input>
               <p className='chu'>Mã ngành: </p><input className='input-tao' type='text'></input>
               <p className='chu'>Mã lớp: </p><input className='input-tao' type='text'></input>
-              <p className='chu'>Email: </p><input className='input-tao' type='email'></input>
               <p className='chu'>Mật khẩu: </p><input className='input-tao' type='password'></input>
             </div>
           </div>

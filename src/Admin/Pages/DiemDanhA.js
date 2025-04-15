@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import './DiemDanhA.css'; // Import the CSS file
-import { House, UserRound, ScanFace, UserRoundPlus, ContactRound, UsersRound, LogOut } from 'lucide-react';
+import { House, UserRound, ScanFace, UserRoundPlus, ContactRound, UsersRound, LogOut, CircleFadingPlus, FolderPlus } from 'lucide-react';
 
 function DiemDanhA() {
   return (
@@ -43,6 +43,28 @@ function DiemDanhA() {
                   <div className="icon">
                     <UserRoundPlus />
                     <p className="title">Sinh viên</p>
+                  </div>
+                </MenuItem>
+              </div>
+            </SubMenu>
+            <SubMenu label={<p className="title">Tạo</p>} icon={<div className="icon"><FolderPlus /></div>}>
+              <div className="sub-menu-bar">
+                <MenuItem className="menu-item" href="/admin/tao-khoa">
+                  <div className="icon">
+                    <CircleFadingPlus />
+                    <p className="title">Khoa</p>
+                  </div>
+                </MenuItem>
+                <MenuItem className="menu-item" href="/admin/tao-nganh">
+                  <div className="icon">
+                    <CircleFadingPlus />
+                    <p className="title">Ngành</p>
+                  </div>
+                </MenuItem>
+                <MenuItem className="menu-item" href="/admin/tao-lop">
+                  <div className="icon">
+                    <CircleFadingPlus />
+                    <p className="title">Lớp</p>
                   </div>
                 </MenuItem>
               </div>

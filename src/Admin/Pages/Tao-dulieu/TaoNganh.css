@@ -73,17 +73,9 @@
   padding: 2px;
 }
 
-.form-trai {
+.form-mot {
   display: flex;
   margin-left: 30px;
-  padding: 20px;
-  flex: 1;
-  flex-direction: column;
-}
-
-.form-phai {
-  display: flex;
-  margin-left: 150px;
   padding: 20px;
   flex: 1;
   flex-direction: column;
@@ -123,8 +115,8 @@
   box-shadow: 0.05em 0.05em;
 }
 
-.button-form {
-  margin-top: 20px;
+.button-form-mot {
+  margin-bottom: 200px;
 }
 
 .chu {
@@ -140,7 +132,6 @@
   align-items: center;
 }
 .radio-group label {
-  font-weight: bold;
   margin-right: 50px; /* Khoảng cách giữa các radio button */
   font-size: 15px;
 

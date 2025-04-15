@@ -6,22 +6,53 @@
   flex-direction: row;
   height: 100%;
   width: 100%;
-  background-color: #CBF1F5;
+  background-color: #E3FDFD;
   color: rgb(0, 0, 0);
   padding: 0 0 0 0px; 
   position: relative;
 }
   
-  .side-menu {
-    width: 280px;
-    height: 100vh;
-    background-color: #A6E3E9;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+.side-menu {
+  width: 290px;
+  background-color: #A6E3E9; /* Màu nền cho sidebar */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Đổ bóng cho sidebar */
+  position: sticky; /* Giữ sidebar cố định khi cuộn */
+  top: 0; /* Đặt vị trí cố định */
+  height: 100vh; /* Chiều cao của sidebar */
+  overflow-y: auto; /* Cho phép cuộn nếu nội dung vượt quá chiều cao */
+}
+  
+  .content-tk-ad {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px 10px 20px;
+    gap : 20px;
+  }
+
+  .chu-de {
+    display: flex;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  table {
+    width: 1000px;
+    margin: 0 auto;
+    border-collapse: collapse; /* Gộp các đường viền */
+    border: 1px solid #333;
   }
   
-  .content {
-    flex: 1;
-    padding: 20px;
+  th, td {
+    padding: 10px; /* Khoảng cách bên trong ô */
+    text-align: left; /* Căn trái cho văn bản */
+    border: 1px solid #333;
+    background-color: #ebfbfd;
+  }
+  
+  th {
+    background-color: #6AD4DD;
   }
   
   .icon {
@@ -29,6 +60,23 @@
     align-items: center;
     margin: 10px 0;
     cursor: pointer;
+  }
+
+  .icon-table {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .icon-button {
+    background: none; /* Không có nền */
+    border: none; /* Không có viền */
+    cursor: pointer; /* Con trỏ chuột khi di chuột qua */
+    padding: 0; /* Không có khoảng cách bên trong */
+    display: flex; /* Để căn giữa biểu tượng */
+    align-items: center; /* Căn giữa theo chiều dọc */
   }
   
   .title {
@@ -60,4 +108,41 @@
   .sub-menu-bar {
     background-color: #71C9CE;
     padding: 2px;
+  }
+
+  .text-button {
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+    text-align: left;
+  }
+
+  .back-next {
+    display: flex;
+    flex-direction: row;
+    align-items: right;
+    gap: 10px;
+  }
+
+  .input-tim {
+    height: 24px;
+    border: 1px solid black;
+    border-radius: 0.4em;
+    font-weight: Arial;
+    font-size: 15px;
+  }
+
+  .search-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 900px;
+  }
+  
+  .search-bar input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    margin-right: 10px;
   }

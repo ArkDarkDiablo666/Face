@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.http import HttpResponse 
-from object.views import login_view 
+from object.views import login_view
 def home(request):
     return HttpResponse("Trang chủ Django!")
 

@@ -5,7 +5,7 @@
     align-items: flex-start;
     flex-direction: column;
     height: 100%;
-    background-color: #CBF1F5;
+    background-color: #E3FDFD;
     color: rgb(0, 0, 0);
     padding: 0px; 
     position: relative;
@@ -13,9 +13,12 @@
   
   .side-menu {
     width: 290px;
-    height: 100vh;
     background-color: #A6E3E9; /* Màu nền cho sidebar */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Đổ bóng cho sidebar */
+    position: sticky; /* Giữ sidebar cố định khi cuộn */
+    top: 0; /* Đặt vị trí cố định */
+    height: 100vh; /* Chiều cao của sidebar */
+    overflow-y: auto; /* Cho phép cuộn nếu nội dung vượt quá chiều cao */
   }
   
   .content {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import './TrangCaNhanA.css'; // Import the CSS file
-import { House, UserRound, ScanFace, UserRoundPlus, ContactRound, UsersRound, LogOut } from 'lucide-react';
+import { House, UserRound, ScanFace, UserRoundPlus, ContactRound, UsersRound, LogOut, CircleFadingPlus, FolderPlus } from 'lucide-react';
 
 function TrangCaNhanA() {
   return (
@@ -47,6 +47,28 @@ function TrangCaNhanA() {
                 </MenuItem>
               </div>
             </SubMenu>
+            <SubMenu label={<p className="title">Tạo</p>} icon={<div className="icon"><FolderPlus /></div>}>
+              <div className="sub-menu-bar">
+                <MenuItem className="menu-item" href="/admin/tao-khoa">
+                  <div className="icon">
+                    <CircleFadingPlus />
+                    <p className="title">Khoa</p>
+                  </div>
+                </MenuItem>
+                <MenuItem className="menu-item" href="/admin/tao-nganh">
+                  <div className="icon">
+                    <CircleFadingPlus />
+                    <p className="title">Ngành</p>
+                  </div>
+                </MenuItem>
+                <MenuItem className="menu-item" href="/admin/tao-lop">
+                  <div className="icon">
+                    <CircleFadingPlus />
+                    <p className="title">Lớp</p>
+                  </div>
+                </MenuItem>
+              </div>
+            </SubMenu>
             <MenuItem className="menu-item" href="/admin/diem-danh">
               <div className="icon">
                 <ScanFace />
@@ -61,8 +83,46 @@ function TrangCaNhanA() {
             </MenuItem>
           </Menu>
         </div>
-        <div className="content">
+        <div className="content-thong-tin">
           <h1>TrangCaNhanA</h1>
+          <div className='line'></div>
+          <div className='form-ca-nhan'>
+            <div className='form-thong-tin'>
+              <img src="/ayato.png" alt="Logo" className='avatar' />
+            </div>
+            <div className='form-thong-tin'>
+                <div className='form-chu'>
+                  <p className='chu-ca-nhan'>Mã giáo viên: </p>
+                  <p className='chu-thong-tin'>CNTT000001</p>
+                </div>
+                <div className='form-chu'>
+                  <p className='chu-ca-nhan'>Khoa: </p>
+                  <p className='chu-thong-tin'>Công nghệ thông tin</p>
+                </div>
+              </div>
+              <div className='form-thong-tin'>
+                <div className='form-chu'>
+                  <p className='chu-ca-nhan'>Họ tên: </p>
+                  <p className='chu-thong-tin'>Ayato Kamisato</p>
+                </div>
+                <div className='form-chu'>
+                  <p className='chu-ca-nhan'>Giới tính: </p>
+                  <p className='chu-thong-tin'>Nam</p>
+                </div>
+                <div className='form-chu'>
+                  <p className='chu-ca-nhan'>Ngày sinh: </p>
+                  <p className='chu-thong-tin'>26 tháng 3 năm 1998</p>
+                </div>
+                <div className='form-chu'>
+                  <p className='chu-ca-nhan'>Số điện thoại: </p>
+                  <p className='chu-thong-tin'>0123456789</p>
+                </div>
+                <div className='form-chu'>
+                  <p className='chu-ca-nhan'>Email: </p>
+                  <p className='chu-thong-tin'>ayatokamisato@teacher.ctuet.edu.vn</p>
+                </div>
+              </div>
+          </div>
         </div>
       </div>
     </div>

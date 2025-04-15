@@ -38,8 +38,46 @@ function TrangCaNhanG() {
             </MenuItem>
           </Menu>
         </div>
-        <div className='content'>
-          <h1>Guest</h1>
+        <div className="content-thong-tin">
+          <h1>TrangCaNhanG</h1>
+          <div className='line'></div>
+          <div className='form-ca-nhan'>
+            <div className='form-thong-tin'>
+              <img src="/venti.png" alt="Logo" className='avatar' />
+            </div>
+            <div className='form-thong-tin'>
+                <div className='form-chu'>
+                  <p className='chu-ca-nhan'>Mã sinh viên: </p>
+                  <p className='chu-thong-tin'>KHDL2211058</p>
+                </div>
+                <div className='form-chu'>
+                  <p className='chu-ca-nhan'>Khoa: </p>
+                  <p className='chu-thong-tin'>Công nghệ thông tin</p>
+                </div>
+              </div>
+              <div className='form-thong-tin'>
+                <div className='form-chu'>
+                  <p className='chu-ca-nhan'>Họ tên: </p>
+                  <p className='chu-thong-tin'>Venti</p>
+                </div>
+                <div className='form-chu'>
+                  <p className='chu-ca-nhan'>Giới tính: </p>
+                  <p className='chu-thong-tin'>Nam</p>
+                </div>
+                <div className='form-chu'>
+                  <p className='chu-ca-nhan'>Ngày sinh: </p>
+                  <p className='chu-thong-tin'>16 tháng 6 năm 2004</p>
+                </div>
+                <div className='form-chu'>
+                  <p className='chu-ca-nhan'>Số điện thoại: </p>
+                  <p className='chu-thong-tin'>0907633146</p>
+                </div>
+                <div className='form-chu'>
+                  <p className='chu-ca-nhan'>Email: </p>
+                  <p className='chu-thong-tin'>venti@student.ctuet.edu.vn</p>
+                </div>
+              </div>
+          </div>
         </div>
     </div>
   );
