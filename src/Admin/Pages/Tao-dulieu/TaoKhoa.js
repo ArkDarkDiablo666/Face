@@ -41,7 +41,7 @@ function TaoKhoa() {
 
     const data = {
       makhoa: makhoa.trim(),
-      tenkhoa: tenkhoa.trim()
+      tenkhoa: tenkhoa.trim().replace(/\s{2,}/g, ' ')
     };
 
     try {

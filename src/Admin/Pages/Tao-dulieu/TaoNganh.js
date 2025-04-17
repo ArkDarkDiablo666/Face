@@ -8,7 +8,6 @@ function TaoNganh() {
   const [tennganh, setTennganh] = useState('');
   const [khoaList, setKhoaList] = useState([]);
   const [selectedKhoa, setSelectedKhoa] = useState('');
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false); // Thêm state cho trạng thái loading
 
   useEffect(() => {
@@ -29,38 +28,38 @@ function TaoNganh() {
   const handleSubmit = async () => {
     // Kiểm tra thông tin nhập vào
     if (!manganh.trim() || !tennganh.trim() || !selectedKhoa) {
-      setError('Vui lòng nhập đầy đủ thông tin và chọn khoa.');
+      alert('Vui lòng nhập đầy đủ thông tin và chọn khoa.');
       return;
     }
 
     // Kiểm tra mã ngành
     if (manganh.trim().startsWith(' ')) {
-      setError('Mã ngành không được bắt đầu bằng khoảng trắng.');
+      alert('Mã ngành không được bắt đầu bằng khoảng trắng.');
       return;
     }
     if (/[\s]/.test(manganh.trim())) {
-      setError('Mã ngành không chứa khoảng cách.');
+      alert('Mã ngành không chứa khoảng cách.');
       return;
     }
     if (/[^A-Za-z0-9]/.test(manganh.trim())) {
-      setError('Mã ngành không chứa kí tự đặc biệt.');
+      alert('Mã ngành không chứa kí tự đặc biệt.');
       return;
     }
 
     // Kiểm tra tên ngành
     const tenNganhPattern = /^[A-Za-z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ\s]+$/;
     if (tennganh.trim().startsWith(' ')) {
-      setError('Tên ngành không được bắt đầu bằng khoảng trắng.');
+      alert('Tên ngành không được bắt đầu bằng khoảng trắng.');
       return;
     }
     if (!tenNganhPattern.test(tennganh.trim())) {
-      setError('Tên ngành không chứa kí tự đặc biệt ngoài các ký tự chữ, số và dấu cách.');
+      alert('Tên ngành không chứa kí tự đặc biệt ngoài các ký tự chữ, số và dấu cách.');
       return;
     }
 
     const data = {
       manganh: manganh.trim(),
-      tennganh: tennganh.trim(),
+      tennganh: tennganh.trim().replace(/\s{2,}/g, ' '),
       makhoa: selectedKhoa,  // Đây là mã khoa
     };
     console.log("Dữ liệu gửi đi:", data);
@@ -81,12 +80,11 @@ function TaoNganh() {
         setManganh('');
         setTennganh('');
         setSelectedKhoa('');
-        setError('');
       } else {
-        setError(result.error || 'Có lỗi xảy ra khi tạo ngành');
+        alert(result.error || 'Có lỗi xảy ra khi tạo ngành');
       }
     } catch (error) {
-      setError('Lỗi kết nối đến server');
+      alert('Lỗi kết nối đến server');
       console.error('Error:', error);
     } finally {
       setLoading(false); // Đặt trạng thái loading là false khi hoàn tất
@@ -174,8 +172,6 @@ function TaoNganh() {
         </div>
         <div className="content">
           <h1>Tạo Ngành</h1>
-          {/* Hiển thị thông báo lỗi ngay tại giao diện */}
-          {error && <p className="error-message">{error}</p>} 
 
           <div className='form-mot'>
             <p className='chu'>Mã ngành mới:</p>
@@ -192,13 +188,13 @@ function TaoNganh() {
               value={tennganh}
               onChange={(e) => setTennganh(e.target.value)}
             />
-            <p className='chu'>Thuộc mã khoa:</p>
+            <p className='chu'>Mã khoa:</p>
             <select
               className='input-tao'
               value={selectedKhoa}
               onChange={(e) => setSelectedKhoa(e.target.value)}
             >
-              <option value="">-- Chọn khoa --</option>
+              <option className='input-tao-' value="">-- Chọn khoa --</option>
               {khoaList.map((khoa) => (
                 <option key={khoa.makhoa} value={khoa.makhoa}>
                   {khoa.makhoa}
