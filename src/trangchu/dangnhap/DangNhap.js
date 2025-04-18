@@ -14,11 +14,20 @@ function DangNhap() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:8000/login/', {
+      const res = await axios.post('http://127.0.0.1:8000/login/', {
         tendangnhap,
         matkhau,
       });
-
+      console.log("Dữ liệu từ server trả về:", res.data);  // Xem toàn bộ response
+  
+      // Kiểm tra và lưu vào sessionStorage nếu có mã 
+      if (res.data.tendangnhap) {
+        console.log("Đang lưu mã vào sessionStorage:", res.data.tendangnhap);
+        sessionStorage.setItem("tendangnhap", res.data.tendangnhap);  // Lưu mã 
+      } else {
+        console.log("Không có 'tendangnhap' trong dữ liệu trả về");
+      }
+  
       const role = res.data.role;
       if (role === 'admin') {
         navigate('/admin/trang-ca-nhan');
@@ -32,7 +41,7 @@ function DangNhap() {
     } finally {
       setLoading(false);
     }
-  };
+  };  
 
   return (
     <div className="container-dn">

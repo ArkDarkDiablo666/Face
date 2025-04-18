@@ -4,7 +4,8 @@ from .views import (
     KhoaViewSet, NganhViewSet, LopViewSet,
     SinhvienViewSet, GiaovienViewSet, MonhocViewSet, DiemdanhViewSet,
     tao_khoa_view, tao_nganh_view, danh_sach_khoa,tao_lop_view,danh_sach_nganh,
-    tao_giao_vien_view,tao_sinh_vien_view,danh_sach_nganh_theo_khoa,danh_sach_lop_theo_nganh
+    tao_giao_vien_view,tao_sinh_vien_view,danh_sach_nganh_theo_khoa,danh_sach_lop_theo_nganh,
+    thong_tin_giao_vien, thong_tin_sinh_vien
 )
 
 router = DefaultRouter()
@@ -27,4 +28,6 @@ urlpatterns = [
     path('tao-sinh-vien/', tao_sinh_vien_view, name='tao-sinh-vien'),
     path('danh-sach-nganh-theo-khoa/', danh_sach_nganh_theo_khoa, name='danh-sach-nganh-theo-khoa'),
     path('danh-sach-lop-theo-nganh/', danh_sach_lop_theo_nganh, name='danh-sach-lop-theo-nganh'),
+    path('thong-tin-giao-vien/<str:magiaovien>/', thong_tin_giao_vien, name='thong-tin-giao-vien'),
+    path('thong-tin-sinh-vien/<str:masinhvien>/', thong_tin_sinh_vien, name='thong-tin-sinh-vien'),
 ]

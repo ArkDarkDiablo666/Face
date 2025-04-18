@@ -52,16 +52,16 @@ def login_view(request):
     try:
         gv = Giaovien.objects.get(magiaovien=username, matkhau=password)
         if gv.quyen.strip().lower() == 'admin':
-            return Response({'role': 'admin'}, status=status.HTTP_200_OK)
+            return Response({'role': 'admin','tendangnhap': gv.magiaovien}, status=status.HTTP_200_OK)
         elif gv.quyen.strip().lower() == 'user':
-            return Response({'role': 'user'}, status=status.HTTP_200_OK)
+            return Response({'role': 'user','tendangnhap': gv.magiaovien}, status=status.HTTP_200_OK)
     except Giaovien.DoesNotExist:
         pass
 
     # Kiểm tra bằng mã sinh viên
     try:
         sv = Sinhvien.objects.get(masinhvien=username, matkhau=password)
-        return Response({'role': 'guest'}, status=status.HTTP_200_OK)
+        return Response({'role': 'guest','tendangnhap': sv.masinhvien}, status=status.HTTP_200_OK)
     except Sinhvien.DoesNotExist:
         pass
     
@@ -416,3 +416,45 @@ def danh_sach_lop_theo_nganh(request):
         return Response(data, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({'error': f'Không thể lấy danh sách lớp: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['GET'])
+def thong_tin_giao_vien(request, magiaovien):
+    try:
+        gv = Giaovien.objects.get(magiaovien=magiaovien)
+        serializer = GiaovienSerializer(gv)
+        full_data = serializer.data
+
+        selected_fields = {
+            'magiaovien': full_data.get('magiaovien'),
+            'hoten': full_data.get('hoten'),
+            'sdt': full_data.get('sdt'),
+            'ngaysinh': full_data.get('ngaysinh'),
+            'gioitinh': full_data.get('gioitinh'),
+            'email': full_data.get('email'),
+            'tenkhoa': gv.makhoa.tenkhoa  
+        }
+
+        return Response(selected_fields, status=status.HTTP_200_OK)
+    except Giaovien.DoesNotExist:
+        return Response({'error': 'Không tìm thấy giáo viên'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+def thong_tin_sinh_vien(request, masinhvien):
+    try:
+        sv = Sinhvien.objects.get(masinhvien=masinhvien)
+        serializer = SinhvienSerializer(sv)
+        full_data = serializer.data
+
+        selected_fields = {
+            'masinhvien': full_data.get('masinhvien'),
+            'hoten': full_data.get('hoten'),
+            'sdt': full_data.get('sdt'),
+            'ngaysinh': full_data.get('ngaysinh'),
+            'gioitinh': full_data.get('gioitinh'),
+            'email': full_data.get('email'),
+            'tenkhoa': sv.malop.manganh.makhoa.tenkhoa
+        }
+
+        return Response(selected_fields, status=status.HTTP_200_OK)
+    except Sinhvien.DoesNotExist:
+        return Response({'error': 'Không tìm thấy sinh viên'}, status=status.HTTP_404_NOT_FOUND)
