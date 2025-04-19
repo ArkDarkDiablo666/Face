@@ -10,7 +10,11 @@ from .serializers import (
     SinhvienSerializer, GiaovienSerializer, MonhocSerializer, DiemdanhSerializer
 )
 import json
-from datetime import date
+from django.core.mail import send_mail
+from django.conf import settings
+from .models import Giaovien, Sinhvien
+import re
+
 
 class KhoaViewSet(viewsets.ModelViewSet):
     queryset = Khoa.objects.all()
@@ -41,7 +45,7 @@ class DiemdanhViewSet(viewsets.ModelViewSet):
     serializer_class = DiemdanhSerializer
 
 @api_view(['POST'])
-def login_view(request):
+def dang_nhap(request):
     username = request.data.get('tendangnhap')
     password = request.data.get('matkhau')
     
@@ -68,7 +72,7 @@ def login_view(request):
     return Response({'error': 'Tài khoản hoặc mật khẩu không đúng'}, status=status.HTTP_401_UNAUTHORIZED)
 
 @api_view(['POST'])
-def tao_khoa_view(request):
+def tao_khoa(request):
     ma_khoa = request.data.get('makhoa', '').strip()
     ten_khoa = request.data.get('tenkhoa', '').strip()
     
@@ -95,7 +99,7 @@ def tao_khoa_view(request):
         return Response({'error': f'Có lỗi xảy ra khi tạo khoa: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)                               
 
 @api_view(['POST'])
-def tao_nganh_view(request):
+def tao_nganh(request):
     ma_nganh = request.data.get('manganh', '').strip()
     ten_nganh = request.data.get('tennganh', '').strip()
     ma_khoa = request.data.get('makhoa', '').strip()
@@ -125,7 +129,7 @@ def tao_nganh_view(request):
         return Response({'error': f'Có lỗi xảy ra khi tạo ngành: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['POST'])
-def tao_lop_view(request):
+def tao_lop(request):
     ma_lop = request.data.get('malop', '').strip()
     ten_lop = request.data.get('tenlop', '').strip()
     ma_nganh = request.data.get('manganh', '').strip()
@@ -166,7 +170,7 @@ def danh_sach_nganh(request):
         return Response({'error': f'Không thể lấy danh sách ngành: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 @api_view(['POST'])
-def tao_giao_vien_view(request):
+def tao_giao_vien(request):
     print("Dữ liệu nhận được:", request.data)
 
     hoten = request.data.get('hoten', '').strip()
@@ -213,9 +217,7 @@ def tao_giao_vien_view(request):
     if Giaovien.objects.filter(sdt=sdt).exists():
         return Response({'error': 'Số điện thoại đã tồn tại'}, status=status.HTTP_400_BAD_REQUEST)
 
-    # Email phải có đuôi @gmail.edu.vn và duy nhất
-    if not email.endswith('@edu.vn'):
-        return Response({'error': 'Email phải có đuôi @edu.vn'}, status=status.HTTP_400_BAD_REQUEST)
+    # Email phải duy nhất
     if Giaovien.objects.filter(email=email).exists():
         return Response({'error': 'Email đã tồn tại'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -258,7 +260,7 @@ def tao_giao_vien_view(request):
         return Response({'error': f'Lỗi khi tạo tài khoản: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['POST'])
-def tao_sinh_vien_view(request):
+def tao_sinh_vien(request):
     data = request.data
     print("Dữ liệu nhận được:")
     print(json.dumps(data, indent=2, ensure_ascii=False)) 
@@ -298,8 +300,6 @@ def tao_sinh_vien_view(request):
         if Sinhvien.objects.filter(sdt=sdt).exists():
             return Response({'error': 'Số điện thoại đã tồn tại'}, status=status.HTTP_400_BAD_REQUEST)
 
-        if not email.endswith('@ctuet.edu.vn'):
-            return Response({'error': 'Email phải có đuôi @ctuet.edu.vn'}, status=status.HTTP_400_BAD_REQUEST)
         if Sinhvien.objects.filter(email=email).exists():
             return Response({'error': 'Email đã tồn tại'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -458,3 +458,59 @@ def thong_tin_sinh_vien(request, masinhvien):
         return Response(selected_fields, status=status.HTTP_200_OK)
     except Sinhvien.DoesNotExist:
         return Response({'error': 'Không tìm thấy sinh viên'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['POST'])
+def lay_lai_mat_khau(request):
+    email = request.data.get('email', '').strip()
+    
+    if not email:
+        return Response({'error': 'Vui lòng nhập email'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    # Kiểm tra định dạng email hợp lệ
+    if not re.match(r'^[\w.+-]+@[\w.-]+\.[a-zA-Z]{2,}$', email):
+        return Response({'error': 'Định dạng email không hợp lệ'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    try:
+        # Kiểm tra email trong bảng giáo viên
+        if email.endswith('@edu.vn'):  # Email giáo viên
+            try:
+                gv = Giaovien.objects.get(email=email)
+                
+                # Gửi email với mật khẩu
+                send_mail(
+                    'Thông tin đăng nhập hệ thống',
+                    f'Xin chào {gv.hoten},\n\nBạn vừa yêu cầu lấy lại thông tin đăng nhập.\n\nTên đăng nhập: {gv.magiaovien}\nMật khẩu: {gv.matkhau}\n\nVui lòng đổi mật khẩu sau khi đăng nhập thành công.\n\nTrân trọng,\nQuản trị viên',
+                    settings.DEFAULT_FROM_EMAIL,
+                    [email],
+                    fail_silently=False,
+                )
+                
+                return Response({'message': 'Mật khẩu đã được gửi tới email của bạn'}, status=status.HTTP_200_OK)
+                
+            except Giaovien.DoesNotExist:
+                return Response({'error': 'Email này không tồn tại trong hệ thống'}, status=status.HTTP_404_NOT_FOUND)
+                
+        # Kiểm tra email trong bảng sinh viên
+        elif email.endswith('@ctuet.edu.vn'):  # Email sinh viên
+            try:
+                sv = Sinhvien.objects.get(email=email)
+                
+                # Gửi email với mật khẩu
+                send_mail(
+                    'Thông tin đăng nhập hệ thống',
+                    f'Xin chào {sv.hoten},\n\nBạn vừa yêu cầu lấy lại thông tin đăng nhập.\n\nTên đăng nhập: {sv.masinhvien}\nMật khẩu: {sv.matkhau}\n\nVui lòng đổi mật khẩu sau khi đăng nhập thành công.\n\nTrân trọng,\nQuản trị viên',
+                    settings.DEFAULT_FROM_EMAIL,
+                    [email],
+                    fail_silently=False,
+                )
+                
+                return Response({'message': 'Mật khẩu đã được gửi tới email của bạn'}, status=status.HTTP_200_OK)
+                
+            except Sinhvien.DoesNotExist:
+                return Response({'error': 'Email này không tồn tại trong hệ thống'}, status=status.HTTP_404_NOT_FOUND)
+                
+        else:
+            return Response({'error': 'Email không thuộc hệ thống trường'}, status=status.HTTP_400_BAD_REQUEST)
+            
+    except Exception as e:
+        return Response({'error': f'Có lỗi xảy ra khi gửi email: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

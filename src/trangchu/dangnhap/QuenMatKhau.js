@@ -1,8 +1,29 @@
-import React from 'react';
+import React, { useState} from 'react';
 import './QuenMatKhau.css';
-
+import axios from 'axios';
 
 const QuenMatKhau = () => {
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMessage('');
+    setError('');
+
+    try {
+      const response = await axios.post('/api/lay_lai_mat_khau', { email });
+      setMessage(response.data.message);
+    } catch (err) {
+      if (err.response) {
+        setError(err.response.data.error);
+      } else {
+        setError('Có lỗi xảy ra. Vui lòng thử lại sau.');
+      }
+    }
+  };
+  
   return (
     <div className='container-mk'>
       <div className="form-container-mk">

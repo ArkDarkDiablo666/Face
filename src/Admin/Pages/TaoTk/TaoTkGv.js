@@ -61,9 +61,9 @@ function TaoTkGv() {
       return;
     }
 
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@edu\.vn$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
     if (!emailRegex.test(email)) {
-      alert('Email phải có đuôi @edu.vn');
+      alert('Email phải có đuôi @gmail.com');
       return;
     }
 
@@ -163,42 +163,99 @@ function TaoTkGv() {
 
         <div className="content">
           <h1>Tạo tài khoản giáo viên</h1>
-          <div className='form-tao-tk'>
-            <div className='form-trai'>
-              <p className='chu'>Họ tên giáo viên: </p>
-              <input className='input-tao' type='text' value={fullName} onChange={(e) => setFullName(e.target.value)} />
-              <p className='chu'>Giới tính: </p>
-              <div className='radio-group'>
-                <label><input type='radio' value='Nam' checked={gender === 'Nam'} onChange={(e) => setGender(e.target.value)} /> Nam</label>
-                <label><input type='radio' value='Nữ' checked={gender === 'Nữ'} onChange={(e) => setGender(e.target.value)} /> Nữ</label>
+          {/* Input ẩn để ngăn tự động điền trên cả form */}
+          <input type="text" style={{display: 'none'}} />
+          <input type="password" style={{display: 'none'}} />
+          <form autoComplete="off">
+            <div className='form-tao-tk'>
+              <div className='form-trai'>
+                <p className='chu'>Họ tên giáo viên: </p>
+                <div>
+                  <input type="text" style={{display: 'none'}} />
+                  <input 
+                    className='input-tao' 
+                    type='text' 
+                    value={fullName} 
+                    onChange={(e) => setFullName(e.target.value)} 
+                    autoComplete="new-password" 
+                  />
+                </div>
+                <p className='chu'>Giới tính: </p>
+                <div className='radio-group'>
+                  <label><input type='radio' value='Nam' checked={gender === 'Nam'} onChange={(e) => setGender(e.target.value)} /> Nam</label>
+                  <label><input type='radio' value='Nữ' checked={gender === 'Nữ'} onChange={(e) => setGender(e.target.value)} /> Nữ</label>
+                </div>
+                <p className='chu'>Ngày sinh: </p>
+                <div>
+                  <input type="date" style={{display: 'none'}} />
+                  <input 
+                    className='input-tao' 
+                    type='date' 
+                    value={dob} 
+                    onChange={(e) => setDob(e.target.value)} 
+                    autoComplete="new-password" 
+                  />
+                </div>
+                <p className='chu'>Số điện thoại: </p>
+                <div>
+                  <input type="tel" style={{display: 'none'}} />
+                  <input 
+                    className='input-tao' 
+                    type='text' 
+                    value={phone} 
+                    onChange={(e) => setPhone(e.target.value)} 
+                    autoComplete="new-password" 
+                  />
+                </div>
+                <p>Quyền: </p>
+                <div className='radio-group'>
+                  <label><input type='radio' value='admin' checked={role === 'admin'} onChange={(e) => setRole(e.target.value)} /> Admin</label>
+                  <label><input type='radio' value='user' checked={role === 'user'} onChange={(e) => setRole(e.target.value)} /> User</label>
+                </div>
               </div>
-              <p className='chu'>Ngày sinh: </p>
-              <input className='input-tao' type='date' value={dob} onChange={(e) => setDob(e.target.value)} />
-              <p className='chu'>Số điện thoại: </p>
-              <input className='input-tao' type='text' value={phone} onChange={(e) => setPhone(e.target.value)} />
-              <p>Quyền: </p>
-              <div className='radio-group'>
-                <label><input type='radio' value='admin' checked={role === 'admin'} onChange={(e) => setRole(e.target.value)} /> Admin</label>
-                <label><input type='radio' value='user' checked={role === 'user'} onChange={(e) => setRole(e.target.value)} /> User</label>
-              </div>
-            </div>
 
-            <div className='form-phai'>
-              <p className='chu'>Mã khoa: </p>
-              <select className="input-tao" value={facultyCode} onChange={(e) => setFacultyCode(e.target.value)}>
-                <option value="">-- Chọn khoa --</option>
-                {khoaList.map((khoa) => (
-                  <option key={khoa.makhoa} value={khoa.makhoa}>
-                    {khoa.makhoa}
-                  </option>
-                ))}
-              </select>
-              <p className='chu'>Email: </p>
-              <input className='input-tao' type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
-              <p className='chu'>Mật khẩu: </p>
-              <input className='input-tao' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+              <div className='form-phai'>
+                <p className='chu'>Mã khoa: </p>
+                <div>
+                  <select 
+                    className="input-tao" 
+                    value={facultyCode} 
+                    onChange={(e) => setFacultyCode(e.target.value)}
+                    autoComplete="new-password"
+                  >
+                    <option value="">-- Chọn khoa --</option>
+                    {khoaList.map((khoa) => (
+                      <option key={khoa.makhoa} value={khoa.makhoa}>
+                        {khoa.makhoa}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <p className='chu'>Email: </p>
+                <div>
+                  <input type="email" style={{display: 'none'}} />
+                  <input 
+                    className='input-tao' 
+                    type='email' 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)} 
+                    autoComplete="new-password" 
+                  />
+                </div>
+                <p className='chu'>Mật khẩu: </p>
+                <div>
+                  <input type="password" style={{display: 'none'}} />
+                  <input 
+                    className='input-tao' 
+                    type='password' 
+                    value={password} 
+                    onChange={(e) => setPassword(e.target.value)} 
+                    autoComplete="new-password" 
+                  />
+                </div>
+              </div>
             </div>
-          </div>
+          </form>
           <div className='button-form'>
             <button className='button-tao' onClick={handleSubmit}>Tạo</button>
           </div>

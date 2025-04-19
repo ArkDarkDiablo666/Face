@@ -108,9 +108,9 @@ function TaoTkSv() {
       return;
     }
   
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@ctuet.edu\.vn$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
     if (!emailRegex.test(email)) {
-      alert('Email phải có đuôi @edu.vn');
+      alert('Email phải có đuôi @gmail.com');
       return;
     }
   
@@ -189,10 +189,10 @@ function TaoTkSv() {
             <SubMenu label={<p className="title">Tạo tài khoản</p>} icon={<div className="icon"><UsersRound /></div>}>
               <div className="sub-menu-bar">
                 <MenuItem className="menu-item" href="/admin/tao-tk-gv">
-                  <div className="icon"><UserRoundPlus /><p className="title-main">Giáo viên</p></div>
+                  <div className="icon"><UserRoundPlus /><p className="title">Giáo viên</p></div>
                 </MenuItem>
                 <MenuItem className="menu-item" href="/admin/tao-tk-sv">
-                  <div className="icon"><UserRoundPlus /><p className="title">Sinh viên</p></div>
+                  <div className="icon"><UserRoundPlus /><p className="title-main">Sinh viên</p></div>
                 </MenuItem>
               </div>
             </SubMenu>
@@ -223,7 +223,7 @@ function TaoTkSv() {
           <div className='form-tao-tk'>
             <div className='form-trai'>
               <p className='chu'>Họ tên sinh viên: </p>
-              <input className='input-tao' type='text' value={fullName} onChange={(e) => setFullName(e.target.value)} />
+              <input className='input-tao' type='text' value={fullName} onChange={(e) => setFullName(e.target.value)} autoComplete="new-password"/>
               <p className='chu'>Giới tính: </p>
               <div className='radio-group'>
                 <label><input type='radio' value='Nam' checked={gender === 'Nam'} onChange={(e) => setGender(e.target.value)} /> Nam</label>
@@ -232,7 +232,7 @@ function TaoTkSv() {
               <p className='chu'>Ngày sinh: </p>
               <input className='input-tao' type='date' value={dob} onChange={(e) => setDob(e.target.value)} />
               <p className='chu'>Số điện thoại: </p>
-              <input className='input-tao' type='text' value={phone} onChange={(e) => setPhone(e.target.value)} />
+              <input className='input-tao' type='text' value={phone} onChange={(e) => setPhone(e.target.value)} autoComplete="new-password"/>
             </div>
 
             <div className='form-phai'>
@@ -258,9 +258,9 @@ function TaoTkSv() {
                 ))}
               </select>
               <p className='chu'>Email: </p>
-              <input className='input-tao' type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
+              <input className='input-tao' type='email' value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="new-password"/>
               <p className='chu'>Mật khẩu: </p>
-              <input className='input-tao' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+              <input className='input-tao' type='password' value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="new-password"/>
             </div>
           </div>
           <div className='button-form'>

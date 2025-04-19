@@ -17,13 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.http import HttpResponse 
-from object.views import login_view
+from object.views import dang_nhap, lay_lai_mat_khau
 def home(request):
     return HttpResponse("Trang chủ Django!")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('object/', include('object.urls')),
-    path('login/', login_view),
+    path('dangnhap/', dang_nhap),
+    path('lay-lai-mat-khau/', lay_lai_mat_khau),
     path("", home),
 ]
