@@ -48,8 +48,8 @@ class Sinhvien(models.Model):
         db_table = 'SINHVIEN'
 
 
-class Giaovien(models.Model):
-    magiaovien = models.CharField(primary_key=True, max_length=10)
+class Giangvien(models.Model):
+    magiangvien = models.CharField(primary_key=True, max_length=10)
     hoten = models.CharField(max_length=100)
     gioitinh = models.CharField(max_length=3)
     ngaysinh = models.DateField(null=True, blank=True)
@@ -61,14 +61,14 @@ class Giaovien(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'GIAOVIEN'
+        db_table = 'GIANGVIEN'
 
 
 class Monhoc(models.Model):
     mamon = models.CharField(primary_key=True, max_length=10)
     tenmon = models.CharField(max_length=100)
     makhoa = models.ForeignKey(Khoa, models.DO_NOTHING, db_column='makhoa')
-    magiaovien = models.ForeignKey(Giaovien, models.DO_NOTHING, db_column='magiaovien')
+    magiangvien = models.ForeignKey(Giangvien, models.DO_NOTHING, db_column='magiangvien')
 
     class Meta:
         managed = False
@@ -80,10 +80,10 @@ class Diemdanh(models.Model):
     thoigiandiemdanh = models.DateTimeField()
     trangthai = models.CharField(max_length=100)
     mamon = models.ForeignKey(Monhoc, models.DO_NOTHING, db_column='mamon')
-    magiaovien = models.ForeignKey(Giaovien, models.DO_NOTHING, db_column='magiaovien')
+    magiangvien = models.ForeignKey(Giangvien, models.DO_NOTHING, db_column='magiangvien')
     malop = models.ForeignKey(Lop, models.DO_NOTHING, db_column='malop')
 
     class Meta:
         managed = False
         db_table = 'DIEMDANH'
-        unique_together = (('masinhvien', 'mamon', 'magiaovien', 'malop'),)
+        unique_together = (('masinhvien', 'mamon', 'magiangvien', 'malop'),)

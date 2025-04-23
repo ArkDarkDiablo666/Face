@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, MenuItem } from 'react-pro-sidebar';
 import './TrangCaNhanU.css';
-import { House, UserRound, ScanFace, LogOut } from 'lucide-react';
+import SidebarUser from '../SidebarUser';
 import axios from 'axios';
 
 function TrangCaNhanU() {
-  const [magiaovien, setMaGiaoVien] = useState('');
+  const [magiangvien, setMaGiangVien] = useState('');
   const [hoten, setHoTen] = useState('');
   const [gioitinh, setGioiTinh] = useState('');
   const [ngaysinh, setNgaySinh] = useState('');
@@ -16,12 +15,12 @@ function TrangCaNhanU() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const magiaovien = sessionStorage.getItem("tendangnhap");
+    const magiangvien = sessionStorage.getItem("tendangnhap");
 
-    if (magiaovien) {
-      setMaGiaoVien(magiaovien);
+    if (magiangvien) {
+      setMaGiangVien(magiangvien);
 
-      const apiUrl = `http://127.0.0.1:8000/object/thong-tin-giao-vien/${magiaovien}/`;
+      const apiUrl = `http://127.0.0.1:8000/object/thong-tin-giang-vien/${magiangvien}/`;
       axios.get(apiUrl)
         .then(res => {
           const data = res.data;
@@ -45,43 +44,10 @@ function TrangCaNhanU() {
 
   return (
     <div className="container">
-      <div className="side-menu">
-        <Menu>
-          <div className="icon">
-            <img src="/meme.png" alt="Logo" style={{ width: '50px', height: '50px' }} />
-            <p className="label">Face ID</p>
-          </div>
-          <MenuItem className="menu-item" href="/user">
-            <div className="icon">
-              <House />
-              <p className="title">Trang chủ</p>
-            </div>
-          </MenuItem>
-          <MenuItem className="menu-item" href="/user/trang-ca-nhan">
-            <div className="icon">
-              <UserRound />
-              <p className="title-main">Thông tin cá nhân</p>
-            </div>
-          </MenuItem>
-          <MenuItem className="menu-item" href="/user/diem-danh">
-            <div className="icon">
-              <ScanFace />
-              <p className="title">Điểm danh</p>
-            </div>
-          </MenuItem>
-          <MenuItem className="menu-item" href="/dangnhap">
-            <div className="icon">
-              <LogOut />
-              <p className="title">Đăng xuất</p>
-            </div>
-          </MenuItem>
-        </Menu>
-      </div>
-
+      <SidebarUser />
       <div className="content-thong-tin">
         <h1>Thông tin cá nhân</h1>
-        <div className='line'></div>
-
+        <div className='line'></div>=
         {loading ? (
           <p>Đang tải thông tin...</p>
         ) : error ? (
@@ -96,7 +62,7 @@ function TrangCaNhanU() {
             <div className='form-thong-tin'>
               <div className='form-chu'>
                 <p className='chu-ca-nhan'>Mã giáo viên: </p>
-                <p className='chu-thong-tin'>{magiaovien}</p>
+                <p className='chu-thong-tin'>{magiangvien}</p>
               </div>
               <div className='form-chu'>
                 <p className='chu-ca-nhan'>Khoa: </p>

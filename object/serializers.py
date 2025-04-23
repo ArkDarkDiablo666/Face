@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Khoa, Nganh, Lop, Sinhvien, Giaovien, Monhoc, Diemdanh
+from .models import Khoa, Nganh, Lop, Sinhvien, Giangvien, Monhoc, Diemdanh
 
 class KhoaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -79,17 +79,17 @@ class SinhvienSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-class GiaovienSerializer(serializers.ModelSerializer):
+class GiangvienSerializer(serializers.ModelSerializer):
     makhoa = serializers.CharField()
 
     class Meta:
-        model = Giaovien
+        model = Giangvien
         fields = '__all__'
 
     def create(self, validated_data):
         makhoa = validated_data.pop('makhoa')
         khoa = Khoa.objects.get(makhoa=makhoa)
-        return Giaovien.objects.create(makhoa=khoa, **validated_data)
+        return Giangvien.objects.create(makhoa=khoa, **validated_data)
 
     def update(self, instance, validated_data):
         makhoa = validated_data.pop('makhoa', None)
@@ -102,7 +102,7 @@ class GiaovienSerializer(serializers.ModelSerializer):
 
 class MonhocSerializer(serializers.ModelSerializer):
     makhoa = serializers.CharField()
-    magiaovien = serializers.CharField()
+    magiangvien = serializers.CharField()
 
     class Meta:
         model = Monhoc
@@ -110,18 +110,18 @@ class MonhocSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         makhoa = validated_data.pop('makhoa')
-        magiaovien = validated_data.pop('magiaovien')
+        magiangvien = validated_data.pop('magiaovien')
 
         khoa = Khoa.objects.get(makhoa=makhoa)
-        giaovien = Giaovien.objects.get(magiaovien=magiaovien)
+        giaovien = Giangvien.objects.get(magiangvien=magiangvien)
 
-        return Monhoc.objects.create(makhoa=khoa, magiaovien=giaovien, **validated_data)
+        return Monhoc.objects.create(makhoa=khoa, magiangvien=magiangvien, **validated_data)
 
     def update(self, instance, validated_data):
-        for field in ['makhoa', 'magiaovien']:
+        for field in ['makhoa', 'magiangvien']:
             value = validated_data.pop(field, None)
             if value:
-                related_model = {'makhoa': Khoa, 'magiaovien': Giaovien}[field]
+                related_model = {'makhoa': Khoa, 'magiangvien': Giangvien}[field]
                 setattr(instance, field, related_model.objects.get(**{field: value}))
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
@@ -131,7 +131,7 @@ class MonhocSerializer(serializers.ModelSerializer):
 class DiemdanhSerializer(serializers.ModelSerializer):
     masinhvien = serializers.CharField()
     mamon = serializers.CharField()
-    magiaovien = serializers.CharField()
+    magiangvien = serializers.CharField()
     malop = serializers.CharField()
 
     class Meta:
@@ -141,26 +141,26 @@ class DiemdanhSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         masinhvien = validated_data.pop('masinhvien')
         mamon = validated_data.pop('mamon')
-        magiaovien = validated_data.pop('magiaovien')
+        magiangvien = validated_data.pop('magiaovien')
         malop = validated_data.pop('malop')
 
         sv = Sinhvien.objects.get(masinhvien=masinhvien)
         mh = Monhoc.objects.get(mamon=mamon)
-        gv = Giaovien.objects.get(magiaovien=magiaovien)
+        gv = Giangvien.objects.get(magiangvien=magiangvien)
         lop = Lop.objects.get(malop=malop)
 
         return Diemdanh.objects.create(
-            masinhvien=sv, mamon=mh, magiaovien=gv, malop=lop, **validated_data
+            masinhvien=sv, mamon=mh, magiangvien=gv, malop=lop, **validated_data
         )
 
     def update(self, instance, validated_data):
-        for field in ['masinhvien', 'mamon', 'magiaovien', 'malop']:
+        for field in ['masinhvien', 'mamon', 'magiangvien', 'malop']:
             value = validated_data.pop(field, None)
             if value:
                 model_map = {
                     'masinhvien': Sinhvien,
                     'mamon': Monhoc,
-                    'magiaovien': Giaovien,
+                    'magiangvien': Giangvien,
                     'malop': Lop,
                 }
                 setattr(instance, field, model_map[field].objects.get(**{field: value}))

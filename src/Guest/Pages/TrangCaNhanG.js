@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Menu, MenuItem } from 'react-pro-sidebar';
-import { House, UserRound as User, CalendarCheck, LogOut } from 'lucide-react';
+import SidebarGuest from '../SidebarGuest';
 import './TrangCaNhanG.css';
 
 function TrangCaNhanG() {
@@ -45,38 +44,7 @@ function TrangCaNhanG() {
 
   return (
     <div className="container">
-      <div className="side-menu">
-        <Menu>
-          <div className="icon">
-            <img src="/meme.png" alt="Logo" style={{ width: '50px', height: '50px' }} />
-            <p className="label">Face ID</p>
-          </div>
-          <MenuItem className="menu-item" href="/guest">
-            <div className="icon">
-              <House />
-              <p className="title">Trang chủ</p>
-            </div>
-          </MenuItem>
-          <MenuItem className="menu-item" href="/guest/trang-ca-nhan">
-            <div className="icon">
-              <User />
-              <p className="title-main">Thông tin cá nhân</p>
-            </div>
-          </MenuItem>
-          <MenuItem className="menu-item" href="/guest/xem">
-            <div className="icon">
-              <CalendarCheck />
-              <p className="title">Thống kê điểm danh</p>
-            </div>
-          </MenuItem>
-          <MenuItem className="menu-item" href="/dangnhap">
-            <div className="icon">
-              <LogOut />
-              <p className="title">Đăng xuất</p>
-            </div>
-          </MenuItem>
-        </Menu>
-      </div>
+      <SidebarGuest />
       <div className="content-thong-tin">
         <h1>Thông tin cá nhân</h1>
         <div className='line'></div>

@@ -4,15 +4,15 @@ from rest_framework.response import Response
 from rest_framework import status
 import re
 from datetime import datetime, date
-from .models import Khoa, Nganh, Lop, Sinhvien, Giaovien, Monhoc, Diemdanh
+from .models import Khoa, Nganh, Lop, Sinhvien, Giangvien, Monhoc, Diemdanh
 from .serializers import (
     KhoaSerializer, NganhSerializer, LopSerializer,
-    SinhvienSerializer, GiaovienSerializer, MonhocSerializer, DiemdanhSerializer
+    SinhvienSerializer, GiangvienSerializer, MonhocSerializer, DiemdanhSerializer
 )
 import json
 from django.core.mail import send_mail
 from django.conf import settings
-from .models import Giaovien, Sinhvien
+from .models import Giangvien, Sinhvien
 import re
 
 
@@ -32,9 +32,9 @@ class SinhvienViewSet(viewsets.ModelViewSet):
     queryset = Sinhvien.objects.all()
     serializer_class = SinhvienSerializer
 
-class GiaovienViewSet(viewsets.ModelViewSet):
-    queryset = Giaovien.objects.all()
-    serializer_class = GiaovienSerializer
+class GiangvienViewSet(viewsets.ModelViewSet):
+    queryset = Giangvien.objects.all()
+    serializer_class = GiangvienSerializer
 
 class MonhocViewSet(viewsets.ModelViewSet):
     queryset = Monhoc.objects.all()
@@ -54,12 +54,12 @@ def dang_nhap(request):
 
     # Kiểm tra bằng mã giáo viên
     try:
-        gv = Giaovien.objects.get(magiaovien=username, matkhau=password)
+        gv = Giangvien.objects.get(magiangvien=username, matkhau=password)
         if gv.quyen.strip().lower() == 'admin':
-            return Response({'role': 'admin','tendangnhap': gv.magiaovien}, status=status.HTTP_200_OK)
+            return Response({'role': 'admin','tendangnhap': gv.magiangvien}, status=status.HTTP_200_OK)
         elif gv.quyen.strip().lower() == 'user':
-            return Response({'role': 'user','tendangnhap': gv.magiaovien}, status=status.HTTP_200_OK)
-    except Giaovien.DoesNotExist:
+            return Response({'role': 'user','tendangnhap': gv.magiangvien}, status=status.HTTP_200_OK)
+    except Giangvien.DoesNotExist:
         pass
 
     # Kiểm tra bằng mã sinh viên
@@ -170,7 +170,7 @@ def danh_sach_nganh(request):
         return Response({'error': f'Không thể lấy danh sách ngành: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 @api_view(['POST'])
-def tao_giao_vien(request):
+def tao_giang_vien(request):
     print("Dữ liệu nhận được:", request.data)
 
     hoten = request.data.get('hoten', '').strip()
@@ -232,12 +232,12 @@ def tao_giao_vien(request):
         return Response({'error': 'Mã khoa không tồn tại'}, status=status.HTTP_400_BAD_REQUEST)
 
     # Tạo mã giáo viên tự động
-    magiaovien = tao_ma_giao_vien(makhoa)  # Truyền mã khoa thay vì tên khoa
+    magiangvien = tao_ma_giao_vien(makhoa)  # Truyền mã khoa thay vì tên khoa
 
     # Tạo giáo viên mới 
     try:
         gv = Giaovien.objects.create(
-            magiaovien=magiaovien,
+            magiangvien=magiangvien,
             hoten=hoten,
             gioitinh=gioitinh,
             ngaysinh=ngaysinh,
@@ -250,7 +250,7 @@ def tao_giao_vien(request):
         return Response({
             'message': 'Tạo tài khoản giáo viên thành công!',
             'data': {
-                'magiaovien': gv.magiaovien,
+                'magiaovien': gv.magiangvien,
                 'hoten': gv.hoten,
                 'email': gv.email,
                 'makhoa': gv.makhoa.makhoa
@@ -355,8 +355,8 @@ def tao_sinh_vien(request):
         return Response({'error': f'Lỗi khi tạo sinh viên: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-def tao_ma_giao_vien(ma_khoa):
-    from .models import Giaovien, Khoa
+def tao_ma_giang_vien(ma_khoa):
+    from .models import Giangvien, Khoa
     
     try:
         # Tìm đối tượng khoa theo mã khoa thay vì tên khoa
@@ -365,7 +365,7 @@ def tao_ma_giao_vien(ma_khoa):
         raise ValueError("Mã khoa không hợp lệ")
 
     # Đếm số lượng giáo viên hiện có trong khoa này
-    count = Giaovien.objects.filter(makhoa=khoa).count()
+    count = Giangvien.objects.filter(makhoa=khoa).count()
     
     # Mã giáo viên = TênKhoa + (số lượng hiện tại + 1)
     return f"{khoa.makhoa}{count + 1}"
@@ -418,14 +418,14 @@ def danh_sach_lop_theo_nganh(request):
         return Response({'error': f'Không thể lấy danh sách lớp: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['GET'])
-def thong_tin_giao_vien(request, magiaovien):
+def thong_tin_giang_vien(request, magiaovien):
     try:
-        gv = Giaovien.objects.get(magiaovien=magiaovien)
+        gv = Giangvien.objects.get(magiangvien=magiangvien)
         serializer = GiaovienSerializer(gv)
         full_data = serializer.data
 
         selected_fields = {
-            'magiaovien': full_data.get('magiaovien'),
+            'magiangvien': full_data.get('magiangvien'),
             'hoten': full_data.get('hoten'),
             'sdt': full_data.get('sdt'),
             'ngaysinh': full_data.get('ngaysinh'),
