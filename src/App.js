@@ -10,7 +10,6 @@ import TrangCaNhanU from './User/Pages/TrangCaNhanU';
 import TrangCaNhanA from './Admin/Pages/TrangCaNhanA';
 import TrangCaNhanG from './Guest/Pages/TrangCaNhanG';
 import DiemDanhA from './Admin/Pages/DiemDanhA';
-import Camera from './Admin/Pages/Camera';
 import ChonMon from './Admin/Pages/ChonMon';
 import TaiKhoanSv from './Admin/Pages/TaiKhoanSv';
 import TaiKhoanGv from './Admin/Pages/TaiKhoanGv';
@@ -21,8 +20,10 @@ import TaoKhoa from './Admin/Pages/Tao-dulieu/TaoKhoa';
 import TaoLop from './Admin/Pages/Tao-dulieu/TaoLop';
 import TaoNganh from './Admin/Pages/Tao-dulieu/TaoNganh';
 import TaoMon from './Admin/Pages/Tao-dulieu/TaoMon';
-import CameraU from './User/Pages/CameraU';
 import ChonMonU from './User/Pages/ChonMonU';
+import CamSv from './Admin/Pages/TaoTk/CamSv';
+import DiemDanhCameraA from './Admin/Pages/DiemDanhCameraA';
+import DiemDanhCameraU from './User/Pages/DiemDanhCameraU';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -49,8 +50,8 @@ function App() {
         <Route path="/dangnhap" element={<DangNhap />} />
         <Route path="/quen-mat-khau" element={<QuenMatKhau />} />
 
-        <Route path="/admin/diem-danh" element={<DiemDanhA />} />
-        <Route path="/admin/camera" element={<Camera />} />
+        <Route path="/admin/trang-ca-nhan" element={<TrangCaNhanA />} />
+        <Route path="/admin/diem-danh-a" element={<DiemDanhA />} />
         <Route path="/admin/chon-mon" element={<ChonMon />} />
         <Route path="/admin" element={<TrangCaNhanA />} />
         <Route path="/admin/tai-khoan-sv" element={<TaiKhoanSv />} />
@@ -61,11 +62,15 @@ function App() {
         <Route path="/admin/tao-lop" element={<TaoLop />} />
         <Route path="/admin/tao-nganh" element={<TaoNganh />} />
         <Route path="/admin/tao-mon" element={<TaoMon />} />
+        <Route path="/admin/diem-danh-camera-a" element={<DiemDanhCameraA />} />
+        <Route path="/admin/cam-sv" element={<CamSv />} />
 
-        <Route path="/user/diem-danh" element={<DiemDanhU />} />
-        <Route path="/user" element={<TrangCaNhanU />} />
-        <Route path="/user/camera" element={<CameraU />} />
-        <Route path="/user/chon-mon" element={<ChonMonU />} />
+
+        <Route path="/user/trang-ca-nhan" element={<TrangCaNhanU />} />
+        <Route path="/user/diem-danh-u" element={<DiemDanhU />} />                                                                                                                                                                                                                                              
+        <Route path="/user/diem-danh-camera-u" element={<DiemDanhCameraU />} />
+        <Route path="/user/chon-mon-u" element={<ChonMonU />} />
+
 
         <Route path="/guest" element={<Guest />} />
         <Route path="/guest/trang-ca-nhan" element={<TrangCaNhanG />} />

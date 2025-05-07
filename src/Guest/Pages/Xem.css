@@ -1,5 +1,4 @@
-/* Guest.css */
-
+/* TaiKhoan.css */
 .container {
   display: flex;
   align-items: flex-start;
@@ -12,60 +11,90 @@
   padding: 0 0 0 0px; 
   position: relative;
 }
-  
-.side-menu {
-  width: 290px;
-  background-color: #A6E3E9; /* Màu nền cho sidebar */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Đổ bóng cho sidebar */
-  position: sticky; /* Giữ sidebar cố định khi cuộn */
-  top: 0; /* Đặt vị trí cố định */
-  height: 100vh; /* Chiều cao của sidebar */
-  overflow-y: auto; /* Cho phép cuộn nếu nội dung vượt quá chiều cao */
-}
-  
-  .content {
-    flex: 1;
-    padding: 20px;
+
+  .content-tk-ad {
     display: flex;
     flex-direction: column;
+    padding: 10px 10px 10px 20px;
+    gap : 20px;
+  }
+
+  .chu-de {
+    display: flex;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  table {
+    width: 1000px;
+    margin: 0 auto;
+    border-collapse: collapse; /* Gộp các đường viền */
+    border: 1px solid #333;
   }
   
-  .icon {
-    display: flex; /* Sử dụng Flexbox để căn giữa */
-    align-items: center; /* Căn giữa theo chiều dọc */
-    margin: 10px ; /* Thêm khoảng cách giữa các mục */
+  th, td {
+    padding: 10px; /* Khoảng cách bên trong ô */
+    text-align: left; /* Căn trái cho văn bản */
+    border: 1px solid #333;
+    background-color: #ebfbfd;
+  }
+  
+  th {
+    background-color: #6AD4DD;
+  }
+  
+  .icon-table {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
     cursor: pointer;
+    overflow: hidden;
   }
-  
-  .title {
-    font-weight: bold;
-    font-size: 18px;
-    color: #333; /* Màu chữ */
-    margin-left: 10px;
-    text-align: left; /* Căn trái nội dung */
+
+  .icon-button {
+    background: none; /* Không có nền */
+    border: none; /* Không có viền */
+    cursor: pointer; /* Con trỏ chuột khi di chuột qua */
+    padding: 0; /* Không có khoảng cách bên trong */
+    display: flex; /* Để căn giữa biểu tượng */
+    align-items: center; /* Căn giữa theo chiều dọc */
   }
-  
-  .title-main {
+
+  .text-button {
     font-weight: bold;
-    font-size: 20px;
-    margin-left: 10px;
+    font-size: 16px;
+    color: #333;
     text-align: left;
   }
-  
-  .label {
-    font-weight: bold;
-    color: #333; /* Màu chữ */
-    font-size: 20px;
-    margin-left: 10px; /* Khoảng cách giữa biểu tượng và tiêu đề */
-    text-align: left;
+
+  .back-next {
+    display: flex;
+    flex-direction: row;
+    align-items: right;
+    gap: 10px;
+  }
+
+  .input-tim {
+    height: 24px;
+    border: 1px solid black;
+    border-radius: 0.4em;
+    font-weight: Arial;
+    font-size: 15px;
+  }
+
+  .search-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 900px;
   }
   
-  .menu-item:hover {
-    background-color: #E3FDFD; /* Hiệu ứng hover cho menu item */
-    color: #3674B5;
-  }
-  
-  .title:hover,
-  .title-main:hover {
-    color: #3674B5;
+  .search-bar input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    margin-right: 10px;
   }

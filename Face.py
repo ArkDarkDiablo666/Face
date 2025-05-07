@@ -5,8 +5,8 @@ import face_recognition
 import numpy as np
 
 # Cấu hình đường dẫn
-IMAGE_DIR = r"F:\Image"
-ENCODING_DIR = r"F:\encodings"
+IMAGE_DIR = r"F:\Face_project\Image"
+ENCODING_DIR = r"F:\Face_project\encodings"
 FINAL_ENCODING_FILE = os.path.join(ENCODING_DIR, "encodings.pkl")
 TEMP_ENCODING_FILE = os.path.join(ENCODING_DIR, "temp.pkl")
 CACHED_LABELS_FILE = os.path.join(ENCODING_DIR, "cached_labels.pkl")

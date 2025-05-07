@@ -15,7 +15,7 @@ function SidebarGuest() {
         <MenuItem className="menu-item" href="/guest">
           <div className="icon">
             <House />
-            <p className="title title-main">Trang chủ</p>
+            <p className="title">Trang chủ</p>
           </div>
         </MenuItem>
         <MenuItem className="menu-item" href="/guest/trang-ca-nhan">

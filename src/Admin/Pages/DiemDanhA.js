@@ -1,77 +1,228 @@
-import React, { useState } from 'react';
-import './DiemDanhA.css'; // Nhập file CSS
-import { CircleChevronLeft, CircleChevronRight, Search } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SidebarAdmin from '../SidebarAdmin';
-
-const debounce = (func, delay) => {
-  let timeoutId;
-  return (...args) => {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-    timeoutId = setTimeout(() => {
-      func(...args);
-    }, delay);
-  };
-};
+import DiemDanhCameraA from './DiemDanhCameraA';
+import './DiemDanhA.css';
+import { format } from 'date-fns'; // Make sure date-fns is installed
 
 function DiemDanhA() {
-  const initialData = [
-    { id: 1, name: 'Nguyễn Văn A', description: 'Sinh viên năm 1', createdAt: '2023-01-01', isAbsent: false },
-    { id: 2, name: 'Trần Thị B', description: 'Sinh viên năm 2', createdAt: '2023-01-02', isAbsent: false },
-    { id: 3, name: 'Lê Văn C', description: 'Sinh viên năm 3', createdAt: '2023-01-03', isAbsent: false },
-    { id: 4, name: 'Nguyễn Văn D', description: 'Sinh viên năm 4', createdAt: '2023-01-04', isAbsent: false },
-    { id: 5, name: 'Trần Thị E', description: 'Sinh viên năm 5', createdAt: '2023-01-05', isAbsent: false },
-    { id: 6, name: 'Lê Văn F', description: 'Sinh viên năm 6', createdAt: '2023-01-06', isAbsent: false },
-    { id: 7, name: 'Nguyễn Văn G', description: 'Sinh viên năm 7', createdAt: '2023-01-07', isAbsent: false },
-    { id: 8, name: 'Trần Thị H', description: 'Sinh viên năm 8', createdAt: '2023-01-08', isAbsent: false },
-    { id: 9, name: 'Lê Văn I', description: 'Sinh viên năm 9', createdAt: '2023-01-09', isAbsent: false },
-    { id: 10, name: 'Nguyễn Văn J', description: 'Sinh viên năm 10', createdAt: '2023-01-10', isAbsent: false },
-    { id: 11, name: 'Trần Thị K', description: 'Sinh viên năm 11', createdAt: '2023-01-11', isAbsent: false },
-    { id: 12, name: 'Lê Văn L', description: 'Sinh viên năm 12', createdAt: '2023-01-12', isAbsent: false },
-    { id: 13, name: 'Nguyễn Văn M', description: 'Sinh viên năm 13', createdAt: '2023-01-13', isAbsent: false },
-    { id: 14, name: 'Trần Thị N', description: 'Sinh viên năm 14', createdAt: '2023-01-14', isAbsent: false },
-    { id: 15, name: 'Lê Văn O', description: 'Sinh viên năm 15', createdAt: '2023-01-15', isAbsent: false },
-    { id: 16, name: 'Nguyễn Văn P', description: 'Sinh viên năm 16', createdAt: '2023-01-16', isAbsent: false },
-    { id: 17, name: 'Trần Thị Q', description: 'Sinh viên năm 17', createdAt: '2023-01-17', isAbsent: false },
-    { id: 18, name: 'Lê Văn R', description: 'Sinh viên năm 18', createdAt: '2023-01-18', isAbsent: false },
-    { id: 19, name: 'Nguyễn Văn S', description: 'Sinh viên năm 19', createdAt: '2023-01-19', isAbsent: false },
-    { id: 20, name: 'Trần Thị T', description: 'Sinh viên năm 20', createdAt: '2023-01-20', isAbsent: false },
-  ];
+  const navigate = useNavigate();
+  const [danhSachSinhVien, setDanhSachSinhVien] = useState([]);
+  const [tenLop, setTenLop] = useState('');
+  const [tenMon, setTenMon] = useState('');
+  const [ngay, setNgay] = useState('');
+  const [gio, setGio] = useState('');
+  const [thoiGianDiemDanh, setThoiGianDiemDanh] = useState(''); // This is used in API call
+  const [maLop, setMaLop] = useState('');
+  const [maMon, setMaMon] = useState('');
+  const [maGiangVien, setMaGiangVien] = useState('');
+  const [diemDanh, setDiemDanh] = useState({});
+  const [showCamera, setShowCamera] = useState(false);
+  const [thongBao, setThongBao] = useState('');
+  const [loaiThongBao, setLoaiThongBao] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [data, setData] = useState(initialData);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  const itemsPerPage = 7;
+  useEffect(() => {
+    // Lấy thông tin điểm danh từ sessionStorage
+    const thongTin = sessionStorage.getItem('thongTinDiemDanh');
+    if (thongTin) {
+      try {
+        const parsedData = JSON.parse(thongTin);
+        console.log("Dữ liệu lấy từ sessionStorage:", parsedData);
+        
+        // Xử lý mã lớp
+        const maLopValue = parsedData.maLop || '';
+        setMaLop(maLopValue);
+        
+        // Các trường dữ liệu khác
+        setTenLop(parsedData.tenLop || '');
+        setTenMon(parsedData.tenMon || '');
+        
+        // Xử lý ngày và giờ
+        const ngayDiemDanh = parsedData.ngayDiemDanh || '';
+        setNgay(ngayDiemDanh);
+        
+        // Tạo thời gian hiện tại cho giờ điểm danh
+        const now = new Date();
+        const gioHienTai = format(now, 'HH:mm:ss');
+        setGio(gioHienTai);
+        
+        // Tạo chuỗi thời gian đầy đủ cho điểm danh
+        const thoiGianDayDu = ngayDiemDanh ? `${ngayDiemDanh} ${gioHienTai}` : '';
+        setThoiGianDiemDanh(thoiGianDayDu);
+        
+        setMaMon(parsedData.maMon || '');
+        
+        // Lấy mã giảng viên từ sessionStorage hoặc từ dữ liệu đã có
+        const maGV = sessionStorage.getItem("tendangnhap") || '';
+        setMaGiangVien(maGV || parsedData.maGiangVien || '');
+        
+        // Log kiểm tra các thông tin quan trọng
+        console.log("Thông tin điểm danh đã load:", {
+          maLop: maLopValue,
+          maMon: parsedData.maMon || '',
+          maGiangVien: maGV || parsedData.maGiangVien || '',
+          thoiGianDiemDanh: thoiGianDayDu
+        });
+        
+        // Thiết lập danh sách sinh viên và khởi tạo trạng thái điểm danh
+        const sinhVienList = parsedData.danhSachSinhVien || [];
+        setDanhSachSinhVien(sinhVienList);
 
-  const filteredItems = data.filter(item => 
-    item.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+        const initialState = {};
+        sinhVienList.forEach(sv => {
+          initialState[sv.masinhvien] = false;
+        });
+        setDiemDanh(initialState);
+      } catch (error) {
+        console.error("Lỗi khi xử lý thông tin điểm danh:", error);
+        hienThiThongBao('Lỗi khi xử lý dữ liệu điểm danh. Vui lòng thử lại!', 'error');
+        navigate('/admin/chon-mon');
+      }
+    } else {
+      console.warn("Không tìm thấy thông tin điểm danh trong sessionStorage");
+      hienThiThongBao('Không có dữ liệu điểm danh. Vui lòng chọn môn học trước!', 'error');
+      navigate('/admin/chon-mon');
+    }
+  }, [navigate]);
 
-  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
-
-  const handleSearch = debounce((value) => {
-    setSearchTerm(value);
-  }, 300);
-
-  const handleCheckboxChange = (id) => {
-    const updatedData = data.map(item => 
-      item.id === id ? { ...item, isAbsent: !item.isAbsent } : item
-    );
-    setData(updatedData);
+  // Hàm hiển thị thông báo tự động ẩn
+  const hienThiThongBao = (message, type, redirectAfter = false) => {
+    setThongBao(message);
+    setLoaiThongBao(type);
+    
+    setTimeout(() => {
+      setThongBao('');
+      setLoaiThongBao('');
+      
+      // Nếu redirectAfter là true và type là success, chuyển hướng sau khi hiển thị thông báo
+      if (redirectAfter && type === 'success') {
+        navigate('/admin/chon-mon');
+      }
+    }, 2000); // Giảm thời gian chờ để người dùng không phải đợi quá lâu
   };
 
-  const handleButtonClick1 = () => {
-    window.location.href = '/admin/camera';
+  // Cập nhật trạng thái điểm danh khi checkbox thay đổi
+  const handleCheckboxChange = (masinhvien) => {
+    setDiemDanh(prev => ({
+      ...prev,
+      [masinhvien]: !prev[masinhvien]
+    }));
   };
 
-  const handleSave = () => {
-    // Logic to save data goes here
-    setIsButtonDisabled(true); // Disable the "Điểm danh" button after saving
+  // Xử lý lưu điểm danh
+  const handleLuuDiemDanh = async () => {
+    setIsLoading(true);
+    try {
+      // Kiểm tra các trường bắt buộc
+      if (!maLop || maLop.trim() === '') {
+        throw new Error("Mã lớp không được để trống! Vui lòng làm mới trang và thử lại.");
+      }
+      
+      if (!maMon || maMon.trim() === '') {
+        throw new Error("Mã môn không được để trống! Vui lòng làm mới trang và thử lại.");
+      }
+      
+      if (!maGiangVien || maGiangVien.trim() === '') {
+        throw new Error("Mã giảng viên không được để trống! Vui lòng đăng nhập lại.");
+      }
+      
+      if (!ngay) {
+        throw new Error("Ngày điểm danh không được để trống!");
+      }
+
+      // Cập nhật thời gian điểm danh hiện tại
+      const now = new Date();
+      const gioHienTai = format(now, 'HH:mm:ss');
+      setGio(gioHienTai);
+      
+      // Cập nhật thời gian đầy đủ
+      const thoiGianDayDu = `${ngay} ${gioHienTai}`;
+      setThoiGianDiemDanh(thoiGianDayDu);
+      
+      // Log thông tin để kiểm tra trước khi gửi
+      console.log("Thông tin điểm danh sẽ gửi:", {
+        maLop, maMon, maGiangVien, thoiGianDiemDanh: thoiGianDayDu
+      });
+      
+      // Lấy danh sách sinh viên có mặt (đã được điểm danh)
+      const danhSachDaDiemDanh = Object.entries(diemDanh)
+        .filter(([_, coMat]) => coMat)
+        .map(([masinhvien]) => masinhvien);
+
+      // Lấy danh sách tất cả sinh viên
+      const allStudents = danhSachSinhVien.map(sv => sv.masinhvien);
+      
+      // Gửi request lưu điểm danh
+      const response = await fetch('http://127.0.0.1:8000/object/luu-diem-danh/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          maLop,
+          maMon,
+          maGiangVien,
+          thoiGianDiemDanh: thoiGianDayDu,
+          danhSachSinhVien: danhSachDaDiemDanh,
+          allStudents
+        })
+      });
+
+      const data = await response.json();
+      
+      if (response.ok) {
+        // Hiển thị thông báo thành công và redirect sau đó
+        hienThiThongBao(data.message || 'Điểm danh thành công!', 'success', true);
+      } else {
+        throw new Error(data.error || 'Lỗi không xác định');
+      }
+    } catch (error) {
+      console.error('Lỗi khi lưu điểm danh:', error);
+      hienThiThongBao('Lỗi khi lưu điểm danh: ' + error.message, 'error');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Điều khiển hiển thị camera
+  const toggleCamera = () => {
+    setShowCamera(!showCamera);
+  };
+
+  const handleCloseCameraModal = () => {
+    setShowCamera(false);
+  };
+
+  // Xử lý kết quả nhận diện khuôn mặt
+  const handleFacesDetected = (msvList) => {
+    if (!msvList || msvList.length === 0) {
+      hienThiThongBao('Không nhận diện được sinh viên nào!', 'warning');
+      return;
+    }
+
+    // Tạo bản sao của trạng thái điểm danh hiện tại
+    const newDiemDanh = { ...diemDanh };
+    let countMatched = 0;
+
+    // Đánh dấu các sinh viên được nhận diện
+    msvList.forEach(msv => {
+      // Lọc ra các sinh viên "UNKNOWN"
+      if (msv !== "UNKNOWN" && newDiemDanh.hasOwnProperty(msv)) {
+        newDiemDanh[msv] = true;
+        countMatched++;
+      }
+    });
+
+    // Cập nhật trạng thái điểm danh
+    setDiemDanh(newDiemDanh);
+
+    // Hiển thị thông báo kết quả
+    if (countMatched > 0) {
+      hienThiThongBao(`Đã điểm danh thành công cho ${countMatched} sinh viên!`, 'success');
+    } else {
+      hienThiThongBao('Không tìm thấy sinh viên nào trong danh sách lớp!', 'warning');
+    }
   };
 
   return (
@@ -79,72 +230,77 @@ function DiemDanhA() {
       <div style={{ display: 'flex' }}>
         <SidebarAdmin />
         <div className="content-dd-ad">
-          <h1>DiemDanhA</h1>
-          <div className="search-bar">
-            <input 
-              className='input-tim'
-              type="text" 
-              placeholder="Tìm kiếm theo tên..." 
-              onChange={(e) => handleSearch(e.target.value)} 
-            />
-            <Search className="icon" />
+          <h1>Điểm Danh</h1>
+          <h2>{tenMon} - {tenLop}</h2>
+          <div className="thoi-gian-info">
+            <p><strong>Ngày điểm danh:</strong> {ngay}</p>
+            <p><strong>Giờ hiện tại:</strong> {gio}</p>
+            {/* Add this line to use thoiGianDiemDanh in render if needed */}
+            <p className="hidden-info" style={{ display: 'none' }}>Thời gian đầy đủ: {thoiGianDiemDanh}</p>
           </div>
-          <table>
+
+          {thongBao && (
+            <div className={`thong-bao ${loaiThongBao}`}>
+              {thongBao}
+            </div>
+          )}
+
+          <table className="bang-diem-danh">
             <thead>
               <tr>
-                <th>ID</th>
+                <th>STT</th>
                 <th>MSSV</th>
                 <th>Họ và tên</th>
                 <th>Giới tính</th>
                 <th>Trạng thái</th>
-                <th>MSGV</th>
               </tr>
             </thead>
             <tbody>
-              {currentItems.map((row) => (
-                <tr key={row.id}>
-                  <td>{row.id}</td>
-                  <td>{row.name}</td>
-                  <td>{row.description}</td>
-                  <td>{row.createdAt}</td>
+              {danhSachSinhVien.map((sv, index) => (
+                <tr key={sv.masinhvien} className={diemDanh[sv.masinhvien] ? 'co-mat' : ''}>
+                  <td>{index + 1}</td>
+                  <td>{sv.masinhvien}</td>
+                  <td>{sv.hoten}</td>
+                  <td>{sv.gioitinh}</td>
                   <td>
-                    <input 
-                      type="checkbox" 
-                      checked={row.isAbsent} 
-                      onChange={() => handleCheckboxChange(row.id)} 
+                    <input
+                      type="checkbox"
+                      checked={diemDanh[sv.masinhvien] || false}
+                      onChange={() => handleCheckboxChange(sv.masinhvien)}
                     />
-                    <span> Vắng</span>
                   </td>
-                  <td>{row.status}</td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <div className="back-next">
+          
+          <div className="button-group" style={{ display: 'flex', gap: '10px', justifyContent: 'center', margin: '20px 0' }}>
             <button 
-              className='icon-button'
-              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
-              disabled={currentPage === 1}>
-              <div className='icon-table'>
-                <CircleChevronLeft />
-              </div>
+              className="button-tao" 
+              onClick={toggleCamera}
+              disabled={isLoading}
+            >
+              Điểm Danh
             </button>
-            <p className='text-button'>Page {currentPage} of {totalPages}</p>
+            
             <button 
-              className='icon-button'
-              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
-              disabled={currentPage === totalPages}>
-              <div className='icon-table'>
-                <CircleChevronRight />
-              </div>
+              className="button-tao" 
+              onClick={handleLuuDiemDanh}
+              disabled={isLoading}
+            >
+              {isLoading ? 'Đang lưu...' : 'Lưu'}
             </button>
-          </div>
-          <div className='form-hai-button'>
-            <button className='button-tao' onClick={handleButtonClick1} disabled={isButtonDisabled}>Điểm danh</button>
-            <button className='button-tao' onClick={handleSave}>Lưu</button>
           </div>
         </div>
       </div>
+
+      {showCamera && (
+        <DiemDanhCameraA
+          onClose={handleCloseCameraModal}
+          onFacesDetected={handleFacesDetected}
+          students={danhSachSinhVien}
+        />
+      )}
     </div>
   );
 }

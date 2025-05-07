@@ -6,28 +6,28 @@ import './SidebarUser.css'; // Nhập tệp CSS nếu cần
 
 function SidebarUser () {
   return (
-    <div className="side-menu">
+    <div className="side-menu-u">
       <Menu>
-        <div className="icon">
+        <div className="icon-u">
           <img src="/meme.png" alt="Logo" style={{ width: '50px', height: '50px' }} />
-          <p className="label">Face ID</p>
+          <p className="label-u">Face ID</p>
         </div>
-        <MenuItem className="menu-item" href="/user">
-          <div className="icon">
+        <MenuItem className="menu-item-u" href="/user">
+          <div className="icon-u">
             <UserRound />
-            <p className="title-main">Thông tin cá nhân</p>
+            <p className="title-u">Thông tin cá nhân</p>
           </div>
         </MenuItem>
-        <MenuItem className="menu-item" href="/user/chon-mon">
-          <div className="icon">
+        <MenuItem className="menu-item-u" href="/user/chon-mon-u">
+          <div className="icon-u">
             <ScanFace />
-            <p className="title">Điểm danh</p>
+            <p className="title-u">Điểm danh</p>
           </div>
         </MenuItem>
-        <MenuItem className="menu-item" href="/dangnhap">
-          <div className="icon">
+        <MenuItem className="menu-item-u" href="/dangnhap">
+          <div className="icon-u">
             <LogOut />
-            <p className="title">Đăng xuất</p>
+            <p className="title-u">Đăng xuất</p>
           </div>
         </MenuItem>
       </Menu>

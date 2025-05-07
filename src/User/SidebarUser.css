@@ -1,4 +1,4 @@
-.side-menu {
+.side-menu-u {
     width: 290px;
     background-color: #A6E3E9; /* Màu nền cho sidebar */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Đổ bóng cho sidebar */
@@ -8,27 +8,23 @@
     overflow-y: auto; /* Cho phép cuộn nếu nội dung vượt quá chiều cao */
   }
 
-  .icon {
+  .icon-u {
     display: flex; /* Sử dụng Flexbox để căn giữa */
     align-items: center; /* Căn giữa theo chiều dọc */
     margin: 10px 0; /* Thêm khoảng cách giữa các mục */
     cursor: pointer;
   }
   
-  .title {
+  .title-u {
     font-weight: bold;
     font-size: 18px;
     color: #333; /* Màu chữ */
     margin-left: 10px; /* Khoảng cách giữa biểu tượng và tiêu đề */
     text-align: left; /* Căn trái nội dung */
   }
+
   
-  .title-main {
-    font-weight: bold;
-    font-size: 21px;
-  }
-  
-  .label {
+  .label-u {
     font-weight: bold;
     font-size: 18px;
     color: #333; /* Màu chữ */
@@ -36,12 +32,11 @@
     text-align: left;
   }
   
-  .menu-item:hover {
+  .menu-item-u:hover {
     background-color: #E3FDFD; /* Hiệu ứng hover cho menu item */
     color: #3674B5;
   }
   
-  .title:hover,
-  .title-main:hover {
+  .title-u:hover{
     color: #3674B5;
   }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SidebarAdmin from '../../SidebarAdmin';
-import './TaoKhoa.css'; // Import the CSS file
+import './Tao-dulieu.css'; // Import the CSS file
 
 function TaoKhoa() {
   const [makhoa, setMakhoa] = useState('');  // Declare state for 'makhoa'

@@ -25,7 +25,7 @@ function TrangCaNhanA() {
       setMaGiangVien(magiangvien);
       
       // Hiển thị URL sẽ gọi API để dễ debug
-      const apiUrl = `http://127.0.0.1:8000/object/thong-tin-giao-vien/${magiangvien}/`;
+      const apiUrl = `http://127.0.0.1:8000/object/thong-tin-giang-vien/${magiangvien}/`;
       console.log("Gọi API:", apiUrl);
       
       setLoading(true);

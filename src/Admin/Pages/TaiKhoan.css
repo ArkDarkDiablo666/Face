@@ -11,17 +11,7 @@
   padding: 0 0 0 0px; 
   position: relative;
 }
-  
-.side-menu {
-  width: 290px;
-  background-color: #A6E3E9; /* Màu nền cho sidebar */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Đổ bóng cho sidebar */
-  position: sticky; /* Giữ sidebar cố định khi cuộn */
-  top: 0; /* Đặt vị trí cố định */
-  height: 100vh; /* Chiều cao của sidebar */
-  overflow-y: auto; /* Cho phép cuộn nếu nội dung vượt quá chiều cao */
-}
-  
+
   .content-tk-ad {
     display: flex;
     flex-direction: column;
@@ -55,13 +45,6 @@
     background-color: #6AD4DD;
   }
   
-  .icon {
-    display: flex;
-    align-items: center;
-    margin: 10px 0;
-    cursor: pointer;
-  }
-
   .icon-table {
     display: flex;
     align-items: center;
@@ -77,37 +60,6 @@
     padding: 0; /* Không có khoảng cách bên trong */
     display: flex; /* Để căn giữa biểu tượng */
     align-items: center; /* Căn giữa theo chiều dọc */
-  }
-  
-  .title {
-    font-weight: bold;
-    font-size: 18px;
-    color: #333;
-    margin-left: 10px;
-    text-align: left;
-  }
-  
-  .title-main {
-    font-weight: bold;
-    font-size: 21px;
-  }
-  
-  .label {
-    font-weight: bold;
-    font-size: 18px;
-    color: #333;
-    margin-left: 10px;
-    text-align: left;
-  }
-  
-  .menu-item:hover {
-    background-color: #E3FDFD;
-    color: #3674B5;
-  }
-  
-  .sub-menu-bar {
-    background-color: #71C9CE;
-    padding: 2px;
   }
 
   .text-button {
@@ -146,3 +98,5 @@
     border-radius: 20px;
     margin-right: 10px;
   }
+
+  

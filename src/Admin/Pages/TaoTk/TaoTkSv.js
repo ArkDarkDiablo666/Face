@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import SidebarAdmin from '../../SidebarAdmin';
+import { useNavigate } from 'react-router-dom';
 import './TaoTkSv.css';
 
 
 function TaoTkSv() {
+  const navigate = useNavigate();
   const [gender, setGender] = useState('');
   const [fullName, setFullName] = useState('');
   const [dob, setDob] = useState('');
@@ -147,6 +149,7 @@ function TaoTkSv() {
   
       if (response.status === 201) {
         alert("Tạo tài khoản sinh viên thành công!");
+        const { masinhvien } = await response.json();
         setFullName('');
         setGender('');
         setDob('');
@@ -156,6 +159,9 @@ function TaoTkSv() {
         setPassword('');
         setNganh('');
         setLop('');
+        sessionStorage.setItem('masinhvien', masinhvien);
+        console.log("Đang lưu mã vào sessionStorage:", masinhvien);
+        navigate('/admin/cam-sv');
       } else {
         alert("Tạo tài khoản sinh viên thất bại!");
       }

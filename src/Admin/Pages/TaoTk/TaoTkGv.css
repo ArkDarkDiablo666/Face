@@ -1,146 +1,98 @@
 /* TaoTkSv.css */
 .container {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    flex-direction: row;
-    height: 100%;
-    width: 100%;
-    background-color: #E3FDFD;
-    color: rgb(0, 0, 0);
-    padding: 0 0 0 0px; 
-    position: relative;
-  }
-  
-  .side-menu {
-    width: 290px;
-    background-color: #A6E3E9; /* Màu nền cho sidebar */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Đổ bóng cho sidebar */
-    position: sticky; /* Giữ sidebar cố định khi cuộn */
-    top: 0; /* Đặt vị trí cố định */
-    height: 100vh; /* Chiều cao của sidebar */
-    overflow-y: auto; /* Cho phép cuộn nếu nội dung vượt quá chiều cao */
-  }
-  
-  .content {
-    display: flex;
-    flex: 1;
-    padding: 20px;
-  }
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  background-color: #E3FDFD;
+  color: rgb(0, 0, 0);
+  padding: 0 0 0 0px; 
+  position: relative;
+}
 
-  .form-tao-tk {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: -20px;
-  }
-  
-  .icon {
-    display: flex;
-    align-items: center;
-    margin: 10px 0;
-    cursor: pointer;
-  }
-  
-  .title {
-    font-weight: bold;
-    font-size: 18px;
-    color: #333;
-    margin-left: 10px;
-    text-align: left;
-  }
-  
-  .title-main {
-    font-weight: bold;
-    font-size: 21px;
-  }
-  
-  .label {
-    font-weight: bold;
-    font-size: 18px;
-    color: #333;
-    margin-left: 10px;
-    text-align: left;
-  }
-  
-  .menu-item:hover {
-    background-color: #E3FDFD;
-    color: #3674B5;
-  }
-  
-  .sub-menu-bar {
-    background-color: #71C9CE;
-    padding: 2px;
-  }
-  
-  .form-trai {
-    display: flex;
-    margin-left: 30px;
-    padding: 20px;
-    flex: 1;
-    flex-direction: column;
-  }
+.content {
+  display: flex;
+  flex: 1;
+  padding: 20px;
+}
 
-  .form-phai {
-    display: flex;
-    margin-left: 150px;
-    padding: 20px;
-    flex: 1;
-    flex-direction: column;
-  }
+.form-tao-tk {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: -20px;
+}
 
-  .input-tao {
-    width: 250px;
-    height: 24px;
-    border: 1px solid black;
-    border-radius: 0.4em;
-    font-weight: Arial;
-    font-size: 15px;
-  }
+.form-trai {
+  display: flex;
+  margin-left: 30px;
+  padding: 20px;
+  flex: 1;
+  flex-direction: column;
+}
 
-  .button-tao {
-    background: #71C9CE;
-    font-family: inherit;
-    padding: 0.6em 1.3em;
-    font-weight: 900;
-    font-size: 18px;
-    border: 3px solid black;
-    border-radius: 0.4em;
-    box-shadow: 0.1em 0.1em;
-    margin-right: 5px;
-    width: 160px;
-    height: 50px;
-    transition: transform 0.1s, box-shadow 0.1s; /* Thêm transition cho hiệu ứng */
-  }
-  
-  .button-tao:hover {
-    transform: translate(-0.05em, -0.05em);
-    box-shadow: 0.15em 0.15em;
-  }
-  
-  .button-tao:active {
-    transform: translate(0.05em, 0.05em);
-    box-shadow: 0.05em 0.05em;
-  }
+.form-phai {
+  display: flex;
+  margin-left: 150px;
+  padding: 20px;
+  flex: 1;
+  flex-direction: column;
+}
 
-  .button-form {
-    margin-top: 15px;
-  }
+.input-tao {
+  width: 250px;
+  height: 24px;
+  border: 1px solid black;
+  border-radius: 0.4em;
+  font-weight: Arial;
+  font-size: 15px;
+}
 
-  .chu {
-    font-weight: bold;
-    font-size: 16px;
-    color: #333;
-    margin-left: 10px;
-    text-align: left;
-  }
-  .radio-group {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-  }
-  .radio-group label {
-    margin-right: 50px; /* Khoảng cách giữa các radio button */
-    font-size: 15px;
+.button-tao {
+  background: #71C9CE;
+  font-family: inherit;
+  padding: 0.6em 1.3em;
+  font-weight: 900;
+  font-size: 18px;
+  border: 3px solid black;
+  border-radius: 0.4em;
+  box-shadow: 0.1em 0.1em;
+  margin-right: 5px;
+  width: 160px;
+  height: 50px;
+  transition: transform 0.1s, box-shadow 0.1s; /* Thêm transition cho hiệu ứng */
+}
 
-  }
+.button-tao:hover {
+  transform: translate(-0.05em, -0.05em);
+  box-shadow: 0.15em 0.15em;
+}
+
+.button-tao:active {
+  transform: translate(0.05em, 0.05em);
+  box-shadow: 0.05em 0.05em;
+}
+
+.button-form {
+  margin-top: 15px;
+}
+
+.chu {
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+  margin-left: 10px;
+  text-align: left;
+}
+.radio-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.radio-group label {
+  margin-right: 50px; /* Khoảng cách giữa các radio button */
+  font-size: 15px;
+
+}

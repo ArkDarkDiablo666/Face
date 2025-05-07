@@ -1,75 +1,88 @@
 import React, { useState, useEffect } from 'react';
 import SidebarAdmin from '../../SidebarAdmin';
-import './TaoLop.css';
+import './Tao-dulieu.css';
 
+function TaoTkLop() {
+  const [lopCode, setLopCode] = useState('');
+  const [lopName, setLopName] = useState('');
+  const [facultyCode, setFacultyCode] = useState('');
+  const [nganhCode, setNganhCode] = useState('');
+  const [khoaList, setKhoaList] = useState([]);
+  const [nganhList, setNganhList] = useState([]);
 
-function TaoLop() {
-  const [malop, setMaLop] = useState('');
-  const [tenlop, setTenLop] = useState('');
-  const [manganh, setMaNganh] = useState('');
-  const [danhSachNganh, setDanhSachNganh] = useState([]);
-  const [loading, setLoading] = useState(false);
-
+  // Lấy danh sách khoa
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/object/danh-sach-nganh/')
-      .then(res => res.json())
-      .then(data => {
-        setDanhSachNganh(data);
-      })
-      .catch(err => {
-        console.error('Lỗi khi lấy danh sách ngành:', err);
-        alert('Không thể tải danh sách ngành.');
-      });
+    const fetchKhoaList = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/object/danh-sach-khoa/');
+        const data = await response.json();
+        setKhoaList(data);
+      } catch (error) {
+        console.error('Lỗi khi lấy danh sách khoa:', error);
+      }
+    };
+    fetchKhoaList();
   }, []);
 
-  const validateInput = () => {
-    const regexMa = /^[A-Za-z0-9]+$/;
-    const regexTen = /^[^\s][\p{L}\p{N}\s]+$/u;
-
-    if (!malop || !regexMa.test(malop)) {
-      alert('Mã lớp không hợp lệ. Không được chứa ký tự đặc biệt hoặc để trống.');
-      return false;
+  // Khi chọn khoa → lấy ngành tương ứng
+  useEffect(() => {
+    if (facultyCode) {
+      const fetchNganhList = async () => {
+        try {
+          const response = await fetch(`http://127.0.0.1:8000/object/danh-sach-nganh-theo-khoa/?makhoa=${facultyCode}`);
+          const data = await response.json();
+          setNganhList(data);
+        } catch (error) {
+          console.error('Lỗi khi lấy danh sách ngành:', error);
+        }
+      };
+      fetchNganhList();
+    } else {
+      setNganhList([]);
     }
-    if (!tenlop || !regexTen.test(tenlop)) {
-      alert('Tên lớp không hợp lệ. Không được để trống hoặc bắt đầu bằng khoảng trắng.');
-      return false;
+  }, [facultyCode]);
+
+  const handleSubmit = async () => {
+    if (!lopCode || !lopName || !nganhCode) {
+      alert("Vui lòng nhập đầy đủ thông tin.");
+      return;
     }
-    if (!manganh) {
-      alert('Vui lòng chọn ngành.');
-      return false;
+
+    const formData = {
+      malop: lopCode,
+      tenlop: lopName,
+      manganh: nganhCode
+    };
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/object/tao-lop/", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log('Thông tin lớp:', formData);
+        console.error('Lỗi từ server:', errorData);
+        alert(`Lỗi: ${errorData.error}`);
+      }
+
+      if (response.status === 201) {
+        alert("Tạo lớp thành công!");
+        setLopCode('');
+        setLopName('');
+        setFacultyCode('');
+        setNganhCode('');
+      } else {
+        alert("Tạo lớp thất bại!");
+      }
+    } catch (err) {
+      console.error("Lỗi khi gọi API tạo lớp:", err);
+      alert("Lỗi kết nối đến server.");
     }
-    return true;
-  };
-
-  const handleTaoLop = () => {
-    if (!validateInput()) return;
-
-    setLoading(true);
-
-    fetch('http://127.0.0.1:8000/object/tao-lop/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        malop: malop.trim(),
-        tenlop: tenlop.trim(),
-        manganh: manganh,
-      }),
-    })
-      .then(async (res) => {
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Lỗi khi tạo lớp.');
-        alert(data.message || 'Tạo lớp thành công!');
-        // reset form
-        setMaLop('');
-        setTenLop('');
-        setMaNganh('');
-      })
-      .catch(err => {
-        alert(err.message || 'Có lỗi xảy ra khi tạo lớp.');
-      })
-      .finally(() => setLoading(false));
   };
 
   return (
@@ -77,28 +90,31 @@ function TaoLop() {
       <div style={{ display: 'flex' }}>
         <SidebarAdmin />
         <div className="content">
-          <h1>Tạo Lớp</h1>
-          <div className="form-mot">
-            <p className="chu">Mã lớp mới:</p>
-            <input className="input-tao" type="text" value={malop} onChange={(e) => setMaLop(e.target.value)} />
-
-            <p className="chu">Tên lớp mới:</p>
-            <input className="input-tao" type="text" value={tenlop} onChange={(e) => setTenLop(e.target.value)} />
-
-            <p className="chu">Thuộc ngành:</p>
-            <select className="input-tao" value={manganh} onChange={(e) => setMaNganh(e.target.value)}>
-              <option value="">-- Chọn ngành --</option>
-              {danhSachNganh.map((nganh) => (
-                <option key={nganh.manganh} value={nganh.manganh}>
-                  {nganh.manganh}
-                </option>
-              ))}
-            </select>
+          <h1>Tạo lớp</h1>
+          <div className="form-tao-tk">
+            <div className="form-trai">
+              <p className="chu">Mã lớp: </p>
+              <input className="input-tao" type="text" value={lopCode} onChange={(e) => setLopCode(e.target.value)} />
+              <p className="chu">Tên lớp: </p>
+              <input className="input-tao" type="text" value={lopName} onChange={(e) => setLopName(e.target.value)} />
+              <p className="chu">Mã khoa: </p>
+              <select className="input-tao" value={facultyCode} onChange={(e) => setFacultyCode(e.target.value)}>
+                <option value="">-- Chọn khoa --</option>
+                {khoaList.map((khoa) => (
+                  <option key={khoa.makhoa} value={khoa.makhoa}>{khoa.makhoa}</option>
+                ))}
+              </select>
+              <p className="chu">Mã ngành: </p>
+              <select className="input-tao" value={nganhCode} onChange={(e) => setNganhCode(e.target.value)}>
+                <option value="">-- Chọn ngành --</option>
+                {nganhList.map((nganh) => (
+                  <option key={nganh.manganh} value={nganh.manganh}>{nganh.manganh}</option>
+                ))}
+              </select>
+            </div>
           </div>
-          <div className="button-form-mot">
-            <button className="button-tao" onClick={handleTaoLop} disabled={loading}>
-              {loading ? 'Đang tạo...' : 'Tạo'}
-            </button>
+          <div className="button-form">
+            <button className="button-tao" onClick={handleSubmit}>Tạo</button>
           </div>
         </div>
       </div>
@@ -106,4 +122,4 @@ function TaoLop() {
   );
 }
 
-export default TaoLop;
+export default TaoTkLop;

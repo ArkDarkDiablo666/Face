@@ -8,7 +8,7 @@ def capture_images():
     folder_name = input("Nhập tên thư mục để lưu ảnh: ")
     
     # Tạo đường dẫn đầy đủ
-    base_path = "F:\\Image"
+    base_path = r"F:\Face_project\Image"
     folder_path = os.path.join(base_path, folder_name)
     
     # Kiểm tra và tạo thư mục nếu chưa tồn tại

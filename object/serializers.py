@@ -132,7 +132,6 @@ class DiemdanhSerializer(serializers.ModelSerializer):
     masinhvien = serializers.CharField()
     mamon = serializers.CharField()
     magiangvien = serializers.CharField()
-    malop = serializers.CharField()
 
     class Meta:
         model = Diemdanh
@@ -141,30 +140,34 @@ class DiemdanhSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         masinhvien = validated_data.pop('masinhvien')
         mamon = validated_data.pop('mamon')
-        magiangvien = validated_data.pop('magiaovien')
-        malop = validated_data.pop('malop')
+        magiangvien = validated_data.pop('magiangvien')
 
         sv = Sinhvien.objects.get(masinhvien=masinhvien)
         mh = Monhoc.objects.get(mamon=mamon)
         gv = Giangvien.objects.get(magiangvien=magiangvien)
-        lop = Lop.objects.get(malop=malop)
 
         return Diemdanh.objects.create(
-            masinhvien=sv, mamon=mh, magiangvien=gv, malop=lop, **validated_data
+            masinhvien=sv,
+            mamon=mh,
+            magiangvien=gv,
+            **validated_data
         )
 
     def update(self, instance, validated_data):
-        for field in ['masinhvien', 'mamon', 'magiangvien', 'malop']:
-            value = validated_data.pop(field, None)
-            if value:
-                model_map = {
-                    'masinhvien': Sinhvien,
-                    'mamon': Monhoc,
-                    'magiangvien': Giangvien,
-                    'malop': Lop,
-                }
-                setattr(instance, field, model_map[field].objects.get(**{field: value}))
+        if 'masinhvien' in validated_data:
+            masinhvien = validated_data.pop('masinhvien')
+            instance.masinhvien = Sinhvien.objects.get(masinhvien=masinhvien)
+
+        if 'mamon' in validated_data:
+            mamon = validated_data.pop('mamon')
+            instance.mamon = Monhoc.objects.get(mamon=mamon)
+
+        if 'magiangvien' in validated_data:
+            magiangvien = validated_data.pop('magiangvien')
+            instance.magiangvien = Giangvien.objects.get(magiangvien=magiangvien)
+
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
+
         instance.save()
         return instance

@@ -40,6 +40,7 @@
 .menu-item-ad:hover {
   background-color: #E3FDFD; /* Màu nền khi hover */
   color: #71C9CE; /* Màu chữ khi hover */
+  width: 100%;
 }
 
 .sub-menu-bar-ad {

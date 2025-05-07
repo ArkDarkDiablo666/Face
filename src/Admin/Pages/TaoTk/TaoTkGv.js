@@ -70,7 +70,7 @@ function TaoTkGv() {
     }
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/object/tao-giao-vien/", {
+      const response = await fetch("http://127.0.0.1:8000/object/tao-giang-vien/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

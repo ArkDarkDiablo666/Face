@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SidebarAdmin from '../../SidebarAdmin';
-import './TaoNganh.css'; // Import the CSS file
+import './Tao-dulieu.css';
 
 
 function TaoNganh() {

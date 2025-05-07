@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class Khoa(models.Model):
     makhoa = models.CharField(primary_key=True, max_length=10)
@@ -65,25 +66,45 @@ class Giangvien(models.Model):
 
 
 class Monhoc(models.Model):
-    mamon = models.CharField(primary_key=True, max_length=10)
+    mamon = models.CharField(primary_key=True, max_length=50)
     tenmon = models.CharField(max_length=100)
-    makhoa = models.ForeignKey(Khoa, models.DO_NOTHING, db_column='makhoa')
-    magiangvien = models.ForeignKey(Giangvien, models.DO_NOTHING, db_column='magiangvien')
+    malop = models.ForeignKey('Lop', models.DO_NOTHING, db_column='malop')
+    magiangvien = models.ForeignKey('Giangvien', models.DO_NOTHING, db_column='magiangvien')
 
     class Meta:
-        managed = False
+        managed = False  
         db_table = 'MONHOC'
-
+        unique_together = (('mamon', 'malop', 'magiangvien'),)
 
 class Diemdanh(models.Model):
-    masinhvien = models.ForeignKey(Sinhvien, models.DO_NOTHING, db_column='masinhvien')
-    thoigiandiemdanh = models.DateTimeField()
-    trangthai = models.CharField(max_length=100)
-    mamon = models.ForeignKey(Monhoc, models.DO_NOTHING, db_column='mamon')
-    magiangvien = models.ForeignKey(Giangvien, models.DO_NOTHING, db_column='magiangvien')
-    malop = models.ForeignKey(Lop, models.DO_NOTHING, db_column='malop')
+    madiemdanh = models.CharField(primary_key=True, max_length=50)
+    masinhvien = models.ForeignKey(
+        'Sinhvien', 
+        models.DO_NOTHING, 
+        db_column='masinhvien'
+    )
+    thoigiandiemdanh = models.DateTimeField(default=timezone.now)
+    trangthai = models.CharField(
+        max_length=100,
+        choices=[('Có mặt', 'Có mặt'), ('Vắng mặt', 'Vắng mặt')]
+    )
+    mamon = models.ForeignKey(
+        'Monhoc', 
+        models.DO_NOTHING,
+        to_field='mamon',
+        db_column='mamon'
+    )
+    magiangvien = models.ForeignKey(
+        'Giangvien',
+        models.DO_NOTHING,
+        db_column='magiangvien'
+    )
+    malop = models.ForeignKey(
+        'Lop',
+        models.DO_NOTHING,
+        db_column='malop'
+    )
 
     class Meta:
         managed = False
         db_table = 'DIEMDANH'
-        unique_together = (('masinhvien', 'mamon', 'magiangvien', 'malop'),)
