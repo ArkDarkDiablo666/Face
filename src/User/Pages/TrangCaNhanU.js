@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './TrangCaNhanU.css';
+import '../../TrangCaNhan.css'; 
 import SidebarUser from '../SidebarUser';
 import axios from 'axios';
 
@@ -45,9 +45,9 @@ function TrangCaNhanU() {
   return (
     <div className="container">
       <SidebarUser />
-      <div className="content-thong-tin">
+      <div className="content-tk">
         <h1>Thông tin cá nhân</h1>
-        <div className='line'></div>=
+        <div className='line'></div>
         {loading ? (
           <p>Đang tải thông tin...</p>
         ) : error ? (
@@ -56,9 +56,6 @@ function TrangCaNhanU() {
           </div>
         ) : (
           <div className='form-ca-nhan'>
-            <div className='form-thong-tin'>
-              <img src="/tighnari.png" alt="Avatar" className='avatar' />
-            </div>
             <div className='form-thong-tin'>
               <div className='form-chu'>
                 <p className='chu-ca-nhan'>Mã giáo viên: </p>

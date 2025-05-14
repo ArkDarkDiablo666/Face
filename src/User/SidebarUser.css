@@ -1,42 +1,63 @@
 .side-menu-u {
-    width: 290px;
-    background-color: #A6E3E9; /* Màu nền cho sidebar */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Đổ bóng cho sidebar */
-    position: sticky; /* Giữ sidebar cố định khi cuộn */
-    top: 0; /* Đặt vị trí cố định */
-    height: 100vh; /* Chiều cao của sidebar */
-    overflow-y: auto; /* Cho phép cuộn nếu nội dung vượt quá chiều cao */
-  }
+  width: 290px; /* Chiều rộng của sidebar */
+  background-color: #0B1957; /* Màu nền cho sidebar */
+  box-shadow: 0 5px 5px #3a3a3a; /* Đổ bóng cho sidebar */
+  position: sticky; /* Giữ sidebar cố định khi cuộn */
+  top: 0; /* Đặt vị trí cố định */
+  height: 100vh; /* Chiều cao của sidebar */
+  overflow-y: auto; /* Cho phép cuộn nếu nội dung vượt quá chiều cao */
+  color: #9ECCFA;
+}
 
-  .icon-u {
-    display: flex; /* Sử dụng Flexbox để căn giữa */
-    align-items: center; /* Căn giữa theo chiều dọc */
-    margin: 10px 0; /* Thêm khoảng cách giữa các mục */
-    cursor: pointer;
-  }
-  
-  .title-u {
-    font-weight: bold;
-    font-size: 18px;
-    color: #333; /* Màu chữ */
-    margin-left: 10px; /* Khoảng cách giữa biểu tượng và tiêu đề */
-    text-align: left; /* Căn trái nội dung */
-  }
+.icon-u {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin: 10px 0;
+  cursor: pointer;
+}
 
+.title-u {
+  font-weight: bold;
+  font-size: 20px;
+  text-align: left;
+}
+
+
+.label-u {
+  font-weight: bold;
+  font-size: 25px;
+  margin-left: 10px;
+  text-align: left;
   
-  .label-u {
-    font-weight: bold;
-    font-size: 18px;
-    color: #333; /* Màu chữ */
-    margin-left: 10px; /* Khoảng cách giữa biểu tượng và tiêu đề */
-    text-align: left;
-  }
-  
-  .menu-item-u:hover {
-    background-color: #E3FDFD; /* Hiệu ứng hover cho menu item */
-    color: #3674B5;
-  }
-  
-  .title-u:hover{
-    color: #3674B5;
-  }
+}
+
+.menu-item-u {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  color: #9ECCFA;
+  flex-direction: row;
+  background-color: #0B1957;
+  box-sizing: border-box;
+}
+
+.ps-menu-button {
+  background-color: transparent !important;
+  padding: 0 !important;
+  width: 290px;
+}
+
+.ps-menu-button:hover {
+  background-color: #9ECCFA !important;  /* Chỉnh theo tone bạn muốn */
+  color: #0B1957 !important;
+}
+
+.menu-item-g:hover {
+  background-color: #9ECCFA !important; /* Màu nền khi hover */
+  color: #0B1957 !important; /* Màu chữ khi hover */
+}
+
+.menu-item-u {
+  font-size: 16px; /* Kích thước chữ cho các mục trong submenu */
+}

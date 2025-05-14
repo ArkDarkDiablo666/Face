@@ -1,16 +1,18 @@
 .side-menu-ad {
-  width: 290px; /* Chiều rộng của sidebar */
-  background-color: #A6E3E9; /* Màu nền cho sidebar */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Đổ bóng cho sidebar */
+  width: 300px; /* Chiều rộng của sidebar */
+  background-color: #0B1957; /* Màu nền cho sidebar */
+  box-shadow: 0 5px 5px #3a3a3a; /* Đổ bóng cho sidebar */
   position: sticky; /* Giữ sidebar cố định khi cuộn */
   top: 0; /* Đặt vị trí cố định */
   height: 100vh; /* Chiều cao của sidebar */
   overflow-y: auto; /* Cho phép cuộn nếu nội dung vượt quá chiều cao */
+  color: #9ECCFA;
 }
 
 .icon-ad {
   display: flex;
   align-items: center;
+  flex-direction: row;
   margin: 10px 0;
   cursor: pointer;
 }
@@ -18,42 +20,52 @@
 .title-ad {
   font-weight: bold;
   font-size: 20px;
-  color: #333;
-  margin-left: 10px;
   text-align: left;
 }
+
 
 .label-ad {
   font-weight: bold;
   font-size: 25px;
-  color: #333;
   margin-left: 10px;
   text-align: left;
+  
 }
 
 .menu-item-ad {
   display: flex;
   align-items: center;
-  transition: background-color 0.3s; /* Hiệu ứng chuyển tiếp cho màu nền */
+  justify-content: start;
+  color: #9ECCFA;
+  flex-direction: row;
+  background-color: #0B1957;
+  box-sizing: border-box;
+}
+
+.ps-menu-button {
+  background-color: transparent !important;
+  padding: 0 !important;
+  width: 270px;
+}
+
+.ps-menu-button:hover {
+  background-color: #9ECCFA !important;  /* Chỉnh theo tone bạn muốn */
+  color: #0B1957 !important;
 }
 
 .menu-item-ad:hover {
-  background-color: #E3FDFD; /* Màu nền khi hover */
-  color: #71C9CE; /* Màu chữ khi hover */
-  width: 100%;
+  background-color: #9ECCFA !important; /* Màu nền khi hover */
+  color: #0B1957 !important; /* Màu chữ khi hover */
 }
 
 .sub-menu-bar-ad {
-  background-color: #71C9CE; /* Màu nền cho submenu */
-  border-radius: 5px; /* Bo góc cho submenu */
+  background-color: #0B1957; /* Màu nền cho submenu */
   max-height: 150px; /* Chiều cao tối đa cho submenu */
   overflow-y: auto; /* Cho phép cuộn nếu nội dung vượt quá chiều cao */
+  color: #9ECCFA;
+  transition: background-color 0.3s ease;
 }
 
 .sub-menu-bar-ad .menu-item-ad {
   font-size: 16px; /* Kích thước chữ cho các mục trong submenu */
-}
-
-.sub-menu-bar-ad .menu-item-ad:hover {
-  background-color: #A3D8D0; /* Màu nền khi hover cho submenu */
 }

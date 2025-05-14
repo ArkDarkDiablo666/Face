@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Loading from './Loading'; // Nhập component Loading
-import DauVao from './trangchu/DauVao';
-import DangNhap from './trangchu/dangnhap/DangNhap';
-import QuenMatKhau from './trangchu/dangnhap/QuenMatKhau';
-import Guest from './Guest/Guest';
+import DangNhap from './trangchu/DangNhap';
+import QuenMatKhau from './trangchu/QuenMatKhau';
 import DiemDanhU from './User/Pages/DiemDanhU';
 import TrangCaNhanU from './User/Pages/TrangCaNhanU';
 import TrangCaNhanA from './Admin/Pages/TrangCaNhanA';
@@ -26,31 +23,14 @@ import DiemDanhCameraA from './Admin/Pages/DiemDanhCameraA';
 import DiemDanhCameraU from './User/Pages/DiemDanhCameraU';
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      // Giả lập việc tải dữ liệu
-      setTimeout(() => {
-        setIsLoading(false); // Đặt trạng thái loading thành false sau khi tải xong
-      }, 500);
-    };
-
-    fetchData();
-  }, []);
-
-  if (isLoading) {
-    return <Loading />; // Hiển thị loading khi đang tải
-  }
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<DauVao />} />
-        <Route path="/dangnhap" element={<DangNhap />} />
+        <Route path="/" element={<DangNhap />} />
         <Route path="/quen-mat-khau" element={<QuenMatKhau />} />
 
-        <Route path="/admin/trang-ca-nhan" element={<TrangCaNhanA />} />
+        <Route path="/admin" element={<TrangCaNhanA />} />
         <Route path="/admin/diem-danh-a" element={<DiemDanhA />} />
         <Route path="/admin/chon-mon" element={<ChonMon />} />
         <Route path="/admin" element={<TrangCaNhanA />} />
@@ -66,14 +46,13 @@ function App() {
         <Route path="/admin/cam-sv" element={<CamSv />} />
 
 
-        <Route path="/user/trang-ca-nhan" element={<TrangCaNhanU />} />
+        <Route path="/user" element={<TrangCaNhanU />} />
         <Route path="/user/diem-danh-u" element={<DiemDanhU />} />                                                                                                                                                                                                                                              
         <Route path="/user/diem-danh-camera-u" element={<DiemDanhCameraU />} />
         <Route path="/user/chon-mon-u" element={<ChonMonU />} />
 
 
-        <Route path="/guest" element={<Guest />} />
-        <Route path="/guest/trang-ca-nhan" element={<TrangCaNhanG />} />
+        <Route path="/guest" element={<TrangCaNhanG />} />
         <Route path="/guest/xem" element={<Xem />} />
       </Routes>
     </Router>

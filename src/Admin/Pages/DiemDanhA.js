@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SidebarAdmin from '../SidebarAdmin';
 import DiemDanhCameraA from './DiemDanhCameraA';
-import './DiemDanhA.css';
+import '../../TrangCaNhan.css'; 
 import { format } from 'date-fns'; // Make sure date-fns is installed
+import { CircleChevronLeft, CircleChevronRight } from 'lucide-react';
+
 
 function DiemDanhA() {
   const navigate = useNavigate();
@@ -21,6 +23,32 @@ function DiemDanhA() {
   const [thongBao, setThongBao] = useState('');
   const [loaiThongBao, setLoaiThongBao] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(6);
+  const totalPages = Math.ceil(danhSachSinhVien.length / itemsPerPage);
+
+  const changePage = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
+
+
+  // Chuyển hàm hiển thị thông báo thành useCallback để tránh tạo lại hàm này trong mỗi lần render
+  const hienThiThongBao = useCallback((message, type, redirectAfter = false) => {
+    setThongBao(message);
+    setLoaiThongBao(type);
+    
+    setTimeout(() => {
+      setThongBao('');
+      setLoaiThongBao('');
+      
+      // Nếu redirectAfter là true và type là success, chuyển hướng sau khi hiển thị thông báo
+      if (redirectAfter && type === 'success') {
+        navigate('/admin/chon-mon');
+      }
+    }, 2000); // Giảm thời gian chờ để người dùng không phải đợi quá lâu
+  }, [navigate]); // Thêm navigate vào dependency array
 
   useEffect(() => {
     // Lấy thông tin điểm danh từ sessionStorage
@@ -84,23 +112,7 @@ function DiemDanhA() {
       hienThiThongBao('Không có dữ liệu điểm danh. Vui lòng chọn môn học trước!', 'error');
       navigate('/admin/chon-mon');
     }
-  }, [navigate]);
-
-  // Hàm hiển thị thông báo tự động ẩn
-  const hienThiThongBao = (message, type, redirectAfter = false) => {
-    setThongBao(message);
-    setLoaiThongBao(type);
-    
-    setTimeout(() => {
-      setThongBao('');
-      setLoaiThongBao('');
-      
-      // Nếu redirectAfter là true và type là success, chuyển hướng sau khi hiển thị thông báo
-      if (redirectAfter && type === 'success') {
-        navigate('/admin/chon-mon');
-      }
-    }, 2000); // Giảm thời gian chờ để người dùng không phải đợi quá lâu
-  };
+  }, [navigate, hienThiThongBao]); // Thêm hienThiThongBao vào dependency array
 
   // Cập nhật trạng thái điểm danh khi checkbox thay đổi
   const handleCheckboxChange = (masinhvien) => {
@@ -229,12 +241,12 @@ function DiemDanhA() {
     <div className="container">
       <div style={{ display: 'flex' }}>
         <SidebarAdmin />
-        <div className="content-dd-ad">
-          <h1>Điểm Danh</h1>
+        <div className="content-tk">
+          <h1>Điểm danh</h1>
           <h2>{tenMon} - {tenLop}</h2>
-          <div className="thoi-gian-info">
-            <p><strong>Ngày điểm danh:</strong> {ngay}</p>
-            <p><strong>Giờ hiện tại:</strong> {gio}</p>
+          <div>
+            <p className='chu-thong-tin'><strong>Ngày điểm danh:</strong> {ngay}</p>
+            <p className='chu-thong-tin'><strong>Giờ hiện tại:</strong> {gio}</p>
             {/* Add this line to use thoiGianDiemDanh in render if needed */}
             <p className="hidden-info" style={{ display: 'none' }}>Thời gian đầy đủ: {thoiGianDiemDanh}</p>
           </div>
@@ -245,7 +257,7 @@ function DiemDanhA() {
             </div>
           )}
 
-          <table className="bang-diem-danh">
+          <table>
             <thead>
               <tr>
                 <th>STT</th>
@@ -256,39 +268,62 @@ function DiemDanhA() {
               </tr>
             </thead>
             <tbody>
-              {danhSachSinhVien.map((sv, index) => (
-                <tr key={sv.masinhvien} className={diemDanh[sv.masinhvien] ? 'co-mat' : ''}>
-                  <td>{index + 1}</td>
-                  <td>{sv.masinhvien}</td>
-                  <td>{sv.hoten}</td>
-                  <td>{sv.gioitinh}</td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      checked={diemDanh[sv.masinhvien] || false}
-                      onChange={() => handleCheckboxChange(sv.masinhvien)}
-                    />
-                  </td>
-                </tr>
-              ))}
+              {danhSachSinhVien
+                .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+                .map((sv, index) => (
+                  <tr key={sv.masinhvien} className={diemDanh[sv.masinhvien] ? 'co-mat' : ''}>
+                    <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                    <td>{sv.masinhvien}</td>
+                    <td>{sv.hoten}</td>
+                    <td>{sv.gioitinh}</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        checked={diemDanh[sv.masinhvien] || false}
+                        onChange={() => handleCheckboxChange(sv.masinhvien)}
+                      />
+                      <span>Có mặt</span>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
-          
-          <div className="button-group" style={{ display: 'flex', gap: '10px', justifyContent: 'center', margin: '20px 0' }}>
+                    <div className="back-next">
+            <button
+              className='icon-button'
+              onClick={() => changePage(Math.max(currentPage - 1, 1))}
+              disabled={currentPage === 1}>
+              <div className='icon-table'>
+                <CircleChevronLeft />
+              </div>
+            </button>
+            <p className='text-button'>Trang {currentPage} trên {totalPages}</p>
+            <button
+              className='icon-button'
+              onClick={() => changePage(Math.min(currentPage + 1, totalPages))}
+              disabled={currentPage === totalPages}>
+              <div className='icon-table'>
+                <CircleChevronRight />
+              </div>
+            </button>
+          </div>
+          <div className="button-form-cam">
             <button 
-              className="button-tao" 
+              className="button" 
               onClick={toggleCamera}
               disabled={isLoading}
             >
-              Điểm Danh
+              <span>Điểm Danh</span>
             </button>
             
             <button 
-              className="button-tao" 
+              className="button" 
               onClick={handleLuuDiemDanh}
               disabled={isLoading}
             >
-              {isLoading ? 'Đang lưu...' : 'Lưu'}
+              <span>
+                {isLoading ? 'Đang lưu...' : 'Lưu'}
+              </span>
             </button>
           </div>
         </div>

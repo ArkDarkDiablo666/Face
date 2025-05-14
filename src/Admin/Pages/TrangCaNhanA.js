@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SidebarAdmin from '../SidebarAdmin';
-import './TrangCaNhanA.css';
+import '../../TrangCaNhan.css'; 
 import axios from 'axios';
 
 function TrangCaNhanA() {
@@ -74,7 +74,7 @@ function TrangCaNhanA() {
     <div className="container">
       <div style={{ display: 'flex' }}>
       <SidebarAdmin />
-        <div className="content-thong-tin">
+        <div className="content-tk">
           <h1>Thông tin cá nhân</h1>
           <div className='line'></div>
           {loading ? (
@@ -86,9 +86,6 @@ function TrangCaNhanA() {
             </div>
           ) : thongTin ? (
             <div className='form-ca-nhan'>
-              <div className='form-thong-tin'>
-                <img src="/ayato.png" alt="Avatar" className='avatar' />
-              </div>
               <div className='form-thong-tin'>
                 <div className='form-chu'>
                   <p className='chu-ca-nhan'>Mã giảng viên: </p>

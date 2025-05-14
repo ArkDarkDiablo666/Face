@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SidebarAdmin from '../../SidebarAdmin';
-import './Tao-dulieu.css';
+import '../../../TrangCaNhan.css'; 
 
 function TaoMon() {
   const [tenmon, setTenMon] = useState('');
@@ -128,8 +128,8 @@ function TaoMon() {
     <div className="container">
       <div style={{ display: 'flex' }}>
         <SidebarAdmin />
-        <div className="content">
-          <h1>Tạo Môn Học</h1>
+        <div className="content-tk">
+          <h1>Tạo môn học</h1>
           <div className="form-tao">
             <div className="form-trai">
               <p className="chu">Tên môn học:</p>
@@ -139,8 +139,7 @@ function TaoMon() {
                 value={tenmon}
                 onChange={(e) => setTenMon(e.target.value)}
               />
-
-              <p className="chu">Khoa của Giảng viên:</p>
+              <p className="chu">Khoa của giảng viên:</p>
               <select
                 className="input-tao"
                 value={makhoa}
@@ -153,7 +152,6 @@ function TaoMon() {
                   </option>
                 ))}
               </select>
-
               <p className="chu">Giảng viên phụ trách:</p>
               <select
                 className="input-tao"
@@ -167,9 +165,6 @@ function TaoMon() {
                   </option>
                 ))}
               </select>
-            </div>
-
-            <div className="form-phai">
               <p className="chu">Khoa của lớp:</p>
               <select
                 className="input-tao"
@@ -215,8 +210,10 @@ function TaoMon() {
           </div>
 
           <div className="button-form">
-            <button className="button-tao" onClick={handleTaoMon} disabled={loading}>
-              {loading ? 'Đang tạo...' : 'Tạo'}
+            <button className="button" onClick={handleTaoMon} disabled={loading}>
+              <span>
+                {loading ? 'Đang tạo...' : 'Tạo'}
+              </span>
             </button>
           </div>
         </div>

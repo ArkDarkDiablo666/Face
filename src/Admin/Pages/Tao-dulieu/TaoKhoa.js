@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SidebarAdmin from '../../SidebarAdmin';
-import './Tao-dulieu.css'; // Import the CSS file
+import '../../../TrangCaNhan.css'; 
 
 function TaoKhoa() {
   const [makhoa, setMakhoa] = useState('');  // Declare state for 'makhoa'
@@ -72,8 +72,8 @@ function TaoKhoa() {
     <div className="container">
       <div style={{ display: 'flex' }}>
         <SidebarAdmin />
-        <div className="content">
-          <h1>Tạo Khoa</h1>
+        <div className="content-tk">
+          <h1>Tạo khoa</h1>
           <div className="form-mot">
             <p className="chu">Mã khoa mới:</p>
             <input
@@ -91,8 +91,8 @@ function TaoKhoa() {
             />
           </div>
           <div className="button-form-mot">
-            <button className="button-tao" onClick={handleSubmit}>  {/* Gọi handleSubmit khi người dùng nhấn nút */}
-              Tạo
+            <button className="button" onClick={handleSubmit}>  {/* Gọi handleSubmit khi người dùng nhấn nút */}
+              <span>Tạo</span>
             </button>
           </div>
         </div>

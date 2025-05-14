@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SidebarAdmin from '../../SidebarAdmin';
-import './Tao-dulieu.css';
+import '../../../TrangCaNhan.css'; 
 
 function TaoTkLop() {
   const [lopCode, setLopCode] = useState('');
@@ -89,7 +89,7 @@ function TaoTkLop() {
     <div className="container">
       <div style={{ display: 'flex' }}>
         <SidebarAdmin />
-        <div className="content">
+        <div className="content-tk">
           <h1>Tạo lớp</h1>
           <div className="form-tao-tk">
             <div className="form-trai">
@@ -114,7 +114,9 @@ function TaoTkLop() {
             </div>
           </div>
           <div className="button-form">
-            <button className="button-tao" onClick={handleSubmit}>Tạo</button>
+            <button className="button" onClick={handleSubmit}>
+              <span>Tạo</span>
+            </button>
           </div>
         </div>
       </div>

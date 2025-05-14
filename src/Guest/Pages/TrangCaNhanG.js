@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import SidebarGuest from '../SidebarGuest';
-import './TrangCaNhanG.css';
+import '../../TrangCaNhan.css'; 
 
 function TrangCaNhanG() {
   const [masinhvien, setMaSinhVien] = useState('');
@@ -45,7 +45,7 @@ function TrangCaNhanG() {
   return (
     <div className="container">
       <SidebarGuest />
-      <div className="content-thong-tin">
+      <div className="content-tk">
         <h1>Thông tin cá nhân</h1>
         <div className='line'></div>
 
@@ -57,9 +57,6 @@ function TrangCaNhanG() {
           </div>
         ) : (
           <div className='form-ca-nhan'>
-            <div className='form-thong-tin'>
-              <img src="/tighnari.png" alt="Avatar" className='avatar' />
-            </div>
             <div className='form-thong-tin'>
               <div className='form-chu'>
                 <p className='chu-ca-nhan'>Mã sinh viên: </p>

@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
-import './Camera.css';
+import '../../TrangCaNhan.css'; 
 
-function DiemDanhCameraA({ onClose, onFacesDetected, students }) {
+function DiemDanhCameraU({ onClose, onFacesDetected, students }) {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -170,45 +170,42 @@ function DiemDanhCameraA({ onClose, onFacesDetected, students }) {
   };
 
   return (
-    <div className="camera-container" style={{
+    <div className='label' style={{
       position: 'fixed',
       top: 0,
       left: 0,
       width: '100%',
       height: '100%',
-      backgroundColor: 'rgba(0, 0, 0, 0.8)',
       zIndex: 1000,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center'
     }}>
       <div style={{
-        width: '90%',
-        maxWidth: '800px',
-        backgroundColor: 'white',
+        width: '100%',
+        height: '100vh',
+        backgroundColor: '#F8F3EA',
         borderRadius: '8px',
         overflow: 'hidden',
-        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
         display: 'flex',
         flexDirection: 'column'
       }}>
         <div style={{
-          padding: '15px 20px',
-          borderBottom: '1px solid #e0e0e0',
-          backgroundColor: '#f8f8f8',
+          padding: '2px 20px',
+          backgroundColor: '#F8F3EA',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center'
         }}>
-          <h2 style={{ margin: 0, fontSize: '20px', color: '#333' }}>Nhận diện khuôn mặt</h2>
+          <h1>Nhận diện khuôn mặt</h1>
           <button 
             onClick={onClose}
             style={{
               background: 'none',
               border: 'none',
-              fontSize: '24px',
+              fontSize: '50px',
               cursor: 'pointer',
-              color: '#666'
+              color: '#3a3a3a'
             }}
           >
             &times;
@@ -218,7 +215,7 @@ function DiemDanhCameraA({ onClose, onFacesDetected, students }) {
         <div style={{ 
           position: 'relative', 
           width: '100%', 
-          height: '400px', 
+          height: '80vh', 
           overflow: 'hidden', 
           backgroundColor: '#000' 
         }}>
@@ -254,19 +251,20 @@ function DiemDanhCameraA({ onClose, onFacesDetected, students }) {
         )}
         
         <div style={{ 
-          padding: '20px', 
+          marginBottom: '20px',
           display: 'flex', 
           flexDirection: 'column', 
-          gap: '15px' 
+          justifyContent: 'center',
+          alignItems: 'center'
+
         }}>
           {detectedFaces.length > 0 && (
             <div style={{
               padding: '15px',
-              backgroundColor: '#f9f9f9',
-              borderRadius: '5px',
-              border: '1px solid #e0e0e0'
+              backgroundColor: '#E6D8C7',
+              borderRadius: '5px'
             }}>
-              <h3 style={{ margin: '0 0 10px 0', fontSize: '16px', color: '#333' }}>Kết quả nhận diện:</h3>
+              <h3 className='label'>Kết quả nhận diện:</h3>
               <ul style={{ 
                 margin: 0, 
                 padding: 0, 
@@ -315,41 +313,35 @@ function DiemDanhCameraA({ onClose, onFacesDetected, students }) {
             <div className="button-form-cam">
               {!capturedImage ? (
                 <button 
-                  className="button-cam" 
+                  className="button" 
                   onClick={captureImage}
                 >
-                  Chụp ảnh
+                  <span>Chụp ảnh</span>
                 </button>
               ) : (
                 <>
                   <button 
-                    className="button-cam" 
+                    className="button" 
                     onClick={handleRetake}
-                    style={{ width: '170px' }}
                   >
-                    Chụp lại
+                    <span>Chụp lại</span>
                   </button>
                   
                   <button 
-                    className="button-cam"
+                    className="button"
                     onClick={sendToRecognition}
                     disabled={isProcessing}
-                    style={{ width: '170px' }}
                   >
-                    {isProcessing ? 'Đang xử lý...' : 'Nhận diện'}
+                    <span>{isProcessing ? 'Đang xử lý...' : 'Nhận diện'}</span>
                   </button>
                 </>
               )}
               
               <button 
-                className="button-cam" 
+                className="button" 
                 onClick={onClose}
-                style={{ 
-                  backgroundColor: '#f44336', 
-                  width: !capturedImage ? '170px' : 'auto'
-                }}
               >
-                Hủy
+                <span>Hủy</span>
               </button>
             </div>
           </div>
@@ -359,4 +351,4 @@ function DiemDanhCameraA({ onClose, onFacesDetected, students }) {
   );
 }
 
-export default DiemDanhCameraA;
+export default DiemDanhCameraU;

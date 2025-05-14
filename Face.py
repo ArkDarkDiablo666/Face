@@ -3,6 +3,9 @@ import cv2
 import pickle
 import face_recognition
 import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from collections import defaultdict
 
 # Cấu hình đường dẫn
 IMAGE_DIR = r"F:\Face_project\Image"
@@ -31,7 +34,7 @@ def encode_faces(images, labels):
     encode_labels = []
     for img, label in zip(images, labels):
         rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        faces = face_recognition.face_locations(rgb_img)
+        faces = face_recognition.face_locations(rgb_img, model="cnn")
         encodes = face_recognition.face_encodings(rgb_img, faces)
         for encode in encodes:
             encode_list.append(encode)
@@ -144,8 +147,66 @@ def recognize_faces_from_video(encodeListKnown, labelList, video_source=0):
     cap.release()
     cv2.destroyAllWindows()
 
+
+def evaluate_model(encodeListKnown, labelList, image_dir, threshold=0.5):
+    """
+    Đánh giá mô hình nhận diện khuôn mặt bằng ma trận nhầm lẫn cho từng nhãn.
+    """
+    unique_labels = sorted(os.listdir(image_dir))
+    confusion_data = defaultdict(lambda: {"TP": 0, "FP": 0, "FN": 0, "TN": 0})
+
+    for label in unique_labels:
+        person_folder = os.path.join(image_dir, label)
+        images, _ = load_images_from_folder(person_folder)
+
+        for img in images:
+            rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            faces = face_recognition.face_locations(rgb_img, model="cnn")
+            encodes = face_recognition.face_encodings(rgb_img, faces)
+
+            matched = False
+            for encodeFace in encodes:
+                matches = face_recognition.compare_faces(encodeListKnown, encodeFace)
+                faceDis = face_recognition.face_distance(encodeListKnown, encodeFace)
+                matchIndex = np.argmin(faceDis) if len(faceDis) > 0 else None
+
+                if matchIndex is not None and matches[matchIndex] and faceDis[matchIndex] < threshold:
+                    predicted_label = labelList[matchIndex]
+                else:
+                    predicted_label = "UNKNOWN"
+
+                if predicted_label == label:
+                    confusion_data[label]["TP"] += 1
+                elif predicted_label == "UNKNOWN":
+                    confusion_data[label]["TN"] += 1
+                elif predicted_label != label:
+                    confusion_data[label]["FP"] += 1
+            if not encodes:
+                confusion_data[label]["TN"] += 1
+
+    return confusion_data
+def plot_confusion_matrix_per_label(confusion_data):
+    """
+    Hiển thị ma trận nhầm lẫn 2x2 cho từng nhãn dưới dạng heatmap.
+    """
+    for label, metrics in confusion_data.items():
+        matrix = np.array([
+            [metrics["TP"], metrics["FN"]],
+            [metrics["FP"], metrics["TN"]]
+        ])
+        
+        plt.figure(figsize=(4, 4))
+        sns.heatmap(matrix, annot=True, fmt='d', cmap="Blues", xticklabels=["Label", "Khác"], yticklabels=["Label", "Khác"])
+        plt.title(f'Ma trận nhầm lẫn - Nhãn: {label}')
+        plt.xlabel("Dự đoán")
+        plt.ylabel("Thực tế")
+        plt.tight_layout()
+        plt.show()
+
 # Load dữ liệu đã mã hóa từ file
 with open(FINAL_ENCODING_FILE, "rb") as f:
     encodeListKnown, labelList = pickle.load(f)
-
+confusion = evaluate_model(encodeListKnown, labelList, IMAGE_DIR)
+plot_confusion_matrix_per_label(confusion)
 recognize_faces_from_video(encodeListKnown, labelList)
+

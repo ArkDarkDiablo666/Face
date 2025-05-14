@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CircleChevronLeft, CircleChevronRight, Search } from 'lucide-react';
-import './Xem.css';
+import '../../TrangCaNhan.css'; 
 import SidebarGuest from '../SidebarGuest';
 import axios from 'axios';
 
@@ -85,7 +85,7 @@ function Xem() {
   return (
     <div className="container">
       <SidebarGuest />
-      <div className='content'>
+      <div className='content-tk'>
         <h1>Lịch sử điểm danh</h1>
         <div className="search-bar">
           <input
@@ -102,28 +102,28 @@ function Xem() {
         ) : error ? (
           <p className="error-message">{error}</p>
         ) : (
-          <>
+          <div className='form-table'>
             <table>
               <thead>
                 <tr>
                   <th>Mã điểm danh</th>
                   <th>Thời gian điểm danh</th>
                   <th>Trạng thái</th>
-                  <th>Giáo viên</th>
+                  <th>Giảng viên</th>
                   <th>Tên môn</th>
-                  <th>Mã lớp</th>
+                  <th>Lớp</th>
                 </tr>
               </thead>
               <tbody>
                 {currentItems.length > 0 ? (
                   currentItems.map((row) => (
                     <tr key={row.id}>
-                      <td>{row.id}</td>
-                      <td>{row.thoiGianDiemDanh}</td>
-                      <td>{row.trangThai}</td>
-                      <td>{row.tenGiangVien}</td>
-                      <td>{row.tenMon}</td>
-                      <td>{row.maLop}</td>
+                      <td style={{ width: '300px' }}>{row.id}</td>
+                      <td style={{ width:'200px' }}>{row.thoiGianDiemDanh}</td>
+                      <td style={{ width: '50px' }}>{row.trangThai}</td>
+                      <td style={{ width: '50px' }}>{row.tenGiangVien}</td>
+                      <td style={{ width: '50px' }}>{row.tenMon}</td>
+                      <td style={{ width: '50px' }}>{row.maLop}</td>
                     </tr>
                   ))
                 ) : (
@@ -144,7 +144,7 @@ function Xem() {
                   <CircleChevronLeft />
                 </div>
               </button>
-              <p className='text-button'>Page {currentPage} of {Math.max(totalPages, 1)}</p>
+              <p className='text-button'>Trang {currentPage} trên {totalPages || 1}</p>
               <button 
                 className='icon-button' 
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
@@ -155,7 +155,7 @@ function Xem() {
                 </div>
               </button>
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>

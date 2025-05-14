@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import SidebarAdmin from '../../SidebarAdmin';
 import { useNavigate } from 'react-router-dom';
-import './TaoTkSv.css';
+import '../../../TrangCaNhan.css'; 
+import { Eye, EyeOff } from 'lucide-react';
 
 
 function TaoTkSv() {
@@ -18,6 +19,8 @@ function TaoTkSv() {
   const [lopList, setLopList] = useState([]);
   const [nganh, setNganh] = useState('');
   const [lop, setLop] = useState('');
+  const [hienMatKhau, setHienMatKhau] = useState(false);
+  
 
   // Lấy danh sách khoa
   useEffect(() => {
@@ -175,7 +178,7 @@ function TaoTkSv() {
     <div className="container">
       <div style={{ display: 'flex' }}>
         <SidebarAdmin />
-        <div className="content">
+        <div className="content-tk">
           <h1>Tạo tài khoản sinh viên</h1>
           <div className='form-tao-tk'>
             <div className='form-trai'>
@@ -217,11 +220,23 @@ function TaoTkSv() {
               <p className='chu'>Email: </p>
               <input className='input-tao' type='email' value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="new-password"/>
               <p className='chu'>Mật khẩu: </p>
-              <input className='input-tao' type='password' value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="new-password"/>
+                <div className="input-password input">
+                  <input
+                    type={hienMatKhau ? 'text' : 'password'}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    autoComplete="new-password"
+                  />
+                  <span className="icon-eye" onClick={() => setHienMatKhau(!hienMatKhau)}>
+                    {hienMatKhau ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </span>
+                </div>
             </div>
           </div>
           <div className='button-form'>
-            <button className='button-tao' onClick={handleSubmit}>Tạo</button>
+            <button className='button' onClick={handleSubmit}>
+              <span>Tạo</span>
+            </button>
           </div>
         </div>
       </div>

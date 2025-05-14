@@ -1,8 +1,9 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
-import re
-from datetime import datetime, date
+from rest_framework.parsers import JSONParser
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from .models import Khoa, Nganh, Lop, Sinhvien, Giangvien, Monhoc, Diemdanh
 from .serializers import (
     KhoaSerializer, NganhSerializer, LopSerializer,
@@ -11,23 +12,21 @@ from .serializers import (
 import json
 from django.core.mail import send_mail
 from django.conf import settings
-from .models import Giangvien, Sinhvien
-import re
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils import timezone
 import os
 import cv2
 import pickle
 import face_recognition
 import numpy as np
-
 import base64
 import unicodedata
+import re
+from datetime import datetime, date
 
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.parsers import JSONParser
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
-from django.utils import timezone
+
+
 
 class KhoaViewSet(viewsets.ModelViewSet):
     queryset = Khoa.objects.all()
@@ -575,10 +574,8 @@ def tao_mon_hoc(request):
         return Response({'error': 'Mã giảng viên không tồn tại'}, status=status.HTTP_400_BAD_REQUEST)
     
     # Tạo mã môn tự động
-    ten_mon_khong_dau = chuyen_viet_sang_anh(ten_mon)
-    words = ten_mon_khong_dau.strip().split()
-    chu_cai_dau = ''.join(word[0].upper() for word in words if word)
-    ma_mon = f"{chu_cai_dau}{ma_lop}{ma_giang_vien}"
+    ten_mon_khong_dau = chuyen_viet_sang_anh(ten_mon).replace(" ", "").upper()
+    ma_mon = f"{ten_mon_khong_dau}{ma_lop}{ma_giang_vien}".upper()
     
     # Kiểm tra mã môn đã tồn tại chưa
     if Monhoc.objects.filter(mamon=ma_mon).exists():
@@ -855,7 +852,7 @@ def nhan_dien_khuon_mat(request):
             }, status=status.HTTP_400_BAD_REQUEST)
 
         # Xử lý nhận diện khuôn mặt
-        face_locations = face_recognition.face_locations(frame)
+        face_locations = face_recognition.face_locations(frame, model="cnn")
         
         if not face_locations:
             return Response({

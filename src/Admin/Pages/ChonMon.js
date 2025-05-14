@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SidebarAdmin from '../SidebarAdmin';
-import './DiemDanhA.css';
+import '../../TrangCaNhan.css'; 
 
 function ChonMon() {
   const navigate = useNavigate();
@@ -165,11 +165,11 @@ function ChonMon() {
     <div className="container">
       <div style={{ display: 'flex' }}>
         <SidebarAdmin />
-        <div className="content">
-          <h1>Điểm Danh Lớp Học</h1>
+        <div className="content-tk">
+          <h1>Điểm danh lớp học</h1>
           <div className="form-combobox">
-            <div className="select-group">
-              <p className="chu">Khoa:</p>
+            <div>
+              <p className='chu-ca-nhan'>Khoa:</p>
               <select className="combobox" value={makhoa} onChange={(e) => setMaKhoa(e.target.value)} disabled={loading}>
                 <option value="">-- Chọn khoa --</option>
                 {danhSachKhoa.map((khoa) => (
@@ -179,8 +179,8 @@ function ChonMon() {
                 ))}
               </select>
             </div>
-            <div className="select-group">
-              <p className="chu">Ngành:</p>
+            <div>
+              <p className='chu-ca-nhan'>Ngành:</p>
               <select className="combobox" value={manganh} onChange={(e) => setMaNganh(e.target.value)} disabled={loading || !makhoa}>
                 <option value="">-- Chọn ngành --</option>
                 {danhSachNganh.map((nganh) => (
@@ -190,8 +190,8 @@ function ChonMon() {
                 ))}
               </select>
             </div>
-            <div className="select-group">
-              <p className="chu">Lớp:</p>
+            <div>
+              <p className='chu-ca-nhan'>Lớp:</p>
               <select className="combobox" value={malop} onChange={(e) => setMaLop(e.target.value)} disabled={loading || !manganh}>
                 <option value="">-- Chọn lớp --</option>
                 {danhSachLop.map((lop) => (
@@ -201,8 +201,8 @@ function ChonMon() {
                 ))}
               </select>
             </div>
-            <div className="select-group">
-              <p className="chu">Môn học:</p>
+            <div>
+              <p className="chu-ca-nhan">Môn học:</p>
               <select className="combobox" value={mamon} onChange={(e) => setMaMon(e.target.value)} disabled={loading || !malop}>
                 <option value="">-- Chọn môn --</option>
                 {danhSachMon.map((mon) => (
@@ -212,8 +212,8 @@ function ChonMon() {
                 ))}
               </select>
             </div>
-            <div className="select-group">
-              <p className="chu">Ngày điểm danh:</p>
+            <div>
+              <p className="chu-ca-nhan">Ngày điểm danh:</p>
               <input
                 type="date"
                 className="combobox"
@@ -222,11 +222,11 @@ function ChonMon() {
               />
             </div>
           </div>
-          <div className="button-form">
-            <button className="button-tao" onClick={handleDiemDanh} disabled={loading || !makhoa || !manganh || !malop || !mamon}>
-              {loadingDanhSach ? 'Đang tải...' : 'Điểm Danh'}
+            <button className="button" onClick={handleDiemDanh} 
+            disabled={loading || !makhoa || !manganh || !malop || !mamon}
+            style={{width : '200px'}}>
+              <span>{loadingDanhSach ? 'Đang tải...' : 'Điểm Danh'}</span>
             </button>
-          </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import './Camera.css';
+import '../../../TrangCaNhan.css'; 
+
 
 function Camera() {
   const videoRef = useRef(null);
@@ -175,21 +176,12 @@ function Camera() {
   };
 
   return (
-    <div className="camera-container" style={{
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      overflow: 'hidden',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between'
-    }}>
-      <div className="video-container" style={{
+    <div style={{ height: '100vh'}}>
+      <div style={{
         flex: '1',
         position: 'relative',
         width: '100%',
+        height: '85vh',
         overflow: 'hidden'
       }}>
         <video
@@ -205,18 +197,18 @@ function Camera() {
         <canvas ref={canvasRef} style={{ display: 'none' }} />
       </div>
 
-      <div className="controls-container" style={{
-        padding: '20px',
-        backgroundColor: 'rgba(0, 0, 0, 0.1)',
-        borderTop: '1px solid rgba(0, 0, 0, 0.1)'
+      <div style={{
+        padding: '10px',
+        height:'12vh',
+        backgroundColor: '#F8F3EA'
       }}>
         {/* Hiển thị trạng thái */}
         {statusMessage && (
-          <div style={{
+          <div className='label' style={{
             textAlign: 'center',
             color: '#333',
             fontSize: '14px',
-            marginBottom: '10px'
+            marginBottom: '10px',
           }}>
             {statusMessage} {isCapturing && `(${Math.round(progress)}%)`}
           </div>
@@ -226,8 +218,7 @@ function Camera() {
         {isCapturing && (
           <div style={{
             width: '100%',
-            backgroundColor: '#f0f0f0',
-            borderRadius: '5px',
+            backgroundColor: '#f8f3ea',
             height: '10px',
             overflow: 'hidden',
             marginBottom: '15px'
@@ -235,33 +226,24 @@ function Camera() {
             <div style={{
               width: `${progress}%`,
               height: '100%',
-              backgroundColor: '#4CAF50',
+              backgroundColor: '#9ECCFA',
               transition: 'width 0.3s'
             }}></div>
           </div>
         )}
 
-        <div className='button-container' style={{
+        <div className='button-form' style={{
           display: 'flex',
           justifyContent: 'center'
         }}>
           <button 
-            className="button-cam" 
+            className="button" 
             onClick={handleButtonClick} 
             disabled={isCapturing}
-            style={{
-              padding: '12px 24px',
-              backgroundColor: '#2196F3',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              fontSize: '16px',
-              cursor: isCapturing ? 'not-allowed' : 'pointer',
-              opacity: isCapturing ? 0.6 : 1,
-              transition: 'all 0.3s'
-            }}
           >
-            {isCapturing ? 'Đang ghi nhận...' : 'Ghi nhận khuôn mặt'}
+            <span>
+              {isCapturing ? 'Đang ghi nhận...' : 'Ghi nhận khuôn mặt'}
+            </span>
           </button>
         </div>
       </div>

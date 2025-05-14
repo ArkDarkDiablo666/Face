@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import './TaiKhoan.css'; // Import the CSS file
+import '../../TrangCaNhan.css';  // Import the CSS file
 import { CircleChevronLeft, CircleChevronRight, Search } from 'lucide-react';
 import SidebarAdmin from '../SidebarAdmin';
 import axios from 'axios';
@@ -22,32 +22,36 @@ function TaiKhoanGv() {
   const [data, setData] = useState([]); // Dữ liệu giảng viên
   const [totalPages, setTotalPages] = useState(0); // Tổng số trang
 
-
-  // Hàm để lấy dữ liệu giảng viên
   const fetchGiangVienData = useCallback(async (page = 1, search = '') => {
     try {
       const response = await axios.get(`http://127.0.0.1:8000/object/danh-sach-giang-vien/?search=${search}&page=${page}`);
-      setData(response.data.data); // Dữ liệu giảng viên
-      setTotalPages(response.data.total_pages); // Tổng số trang
+      console.log('API response:', response.data);
+      setData(response.data.data);
+      
+      if (response.data.total_pages !== undefined) {
+        setTotalPages(response.data.total_pages);
+      } else if (response.data.totalPages !== undefined) {
+        setTotalPages(response.data.totalPages);
+      } else {
+        console.error('Không tìm thấy thông tin tổng số trang trong response');
+        setTotalPages(1);
+      }
     } catch (error) {
       console.error('Lỗi khi lấy dữ liệu giảng viên', error);
+      setTotalPages(1);
     }
-  }, []); // Dùng useCallback để đảm bảo fetchGiangVienData không thay đổi khi render lại
+  }, []);
 
-  // Lọc dữ liệu theo từ khóa tìm kiếm
   const handleSearch = debounce((value) => {
     setSearchTerm(value);
     setCurrentPage(1); // Reset trang khi tìm kiếm
     fetchGiangVienData(1, value); // Tìm kiếm khi thay đổi từ khóa
   }, 300);
 
-  // Cập nhật dữ liệu khi thay đổi trang hoặc từ khóa tìm kiếm
   useEffect(() => {
     fetchGiangVienData(currentPage, searchTerm);
   }, [currentPage, searchTerm, fetchGiangVienData]);
 
-
-  // Hàm để chuyển đến trang tiếp theo hoặc trước đó
   const changePage = (newPage) => {
     setCurrentPage(newPage);
   };
@@ -56,8 +60,8 @@ function TaiKhoanGv() {
     <div className="container">
       <div style={{ display: 'flex' }}>
         <SidebarAdmin />
-        <div className="content-tk-ad">
-          <h1 className='chu-de'>Danh sách Giảng Viên</h1>
+        <div className="content-tk">
+          <h1 className='chu-de'>Danh sách giảng viên</h1>
           <div className="search-bar">
             <input
               className='input-tim'
@@ -82,19 +86,18 @@ function TaiKhoanGv() {
             </thead>
             <tbody>
               {data.map((row, index) => {
-                // Xử lý 'makhoa' để chỉ lấy tên khoa (bỏ phần còn lại)
                 const khoaName = row.makhoa.match(/\((.*?)\)/) ? row.makhoa.match(/\((.*?)\)/)[1] : row.makhoa;
 
                 return (
                   <tr key={row.magiangvien}>
-                    <td>{index + 1}</td>
-                    <td>{row.magiangvien}</td>
-                    <td>{row.hoten}</td>
-                    <td>{row.gioitinh}</td>
-                    <td>{row.ngaysinh}</td>
-                    <td>{row.sdt}</td>
-                    <td>{row.email}</td>
-                    <td>{khoaName}</td> {/* Hiển thị tên khoa đã xử lý */}
+                    <td style={{ width: '5px'}}>{index + 1}</td>
+                    <td style={{ width: '20px'}}>{row.magiangvien}</td>
+                    <td style={{ width: '300px'}}>{row.hoten}</td>
+                    <td style={{ width: '5px'}}>{row.gioitinh}</td>
+                    <td style={{ width: '200px'}}>{row.ngaysinh}</td>
+                    <td style={{ width: '50px'}}>{row.sdt}</td>
+                    <td style={{ width: '300 px'}}>{row.email}</td>
+                    <td style={{ width: '20px'}}>{khoaName}</td>
                   </tr>
                 );
               })}

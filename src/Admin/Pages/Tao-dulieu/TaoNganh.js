@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SidebarAdmin from '../../SidebarAdmin';
-import './Tao-dulieu.css';
+import '../../../TrangCaNhan.css'; 
 
 
 function TaoNganh() {
@@ -95,8 +95,8 @@ function TaoNganh() {
     <div className="container">
       <div style={{ display: 'flex' }}>
         <SidebarAdmin />
-        <div className="content">
-          <h1>Tạo Ngành</h1>
+        <div className="content-tk">
+          <h1>Tạo ngành</h1>
           <div className='form-mot'>
             <p className='chu'>Mã ngành mới:</p>
             <input
@@ -128,8 +128,10 @@ function TaoNganh() {
           </div>
 
           <div className='button-form-mot'>
-            <button className='button-tao' onClick={handleSubmit} disabled={loading}>
-              {loading ? 'Đang tạo ngành...' : 'Tạo'}
+            <button className='button' onClick={handleSubmit} disabled={loading}>
+              <span>
+                {loading ? 'Đang tạo ngành...' : 'Tạo'}
+              </span>
             </button>
           </div>
         </div>

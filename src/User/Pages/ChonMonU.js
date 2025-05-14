@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SidebarAdmin from '../SidebarUser';
-import './DiemDanhU.css';
+import '../../TrangCaNhan.css'; 
 
 function ChonMon() {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ function ChonMon() {
 
   useEffect(() => {
     // Lấy thông tin giảng viên đăng nhập từ sessionStorage
-    const tendangnhap = sessionStorage.getItem('tendangnhap') || '';
+    const tendangnhap = sessionStorage.getItem('tendangnhap');
     setMaGiangVien(tendangnhap);
     
     if (!tendangnhap) {
@@ -142,11 +142,11 @@ function ChonMon() {
     <div className="container">
       <div style={{ display: 'flex' }}>
         <SidebarAdmin />
-        <div className="content">
-          <h1>Điểm Danh Lớp Học</h1>
+        <div className="content-tk">
+          <h1>Điểm danh lớp học</h1>
           <div className="form-combobox">
-            <div className="select-group">
-              <p className="chu">Lớp:</p>
+            <div>
+              <p className='chu-thong-tin'>Lớp:</p>
               <select 
                 className="combobox" 
                 value={malop} 
@@ -162,8 +162,8 @@ function ChonMon() {
               </select>
             </div>
             
-            <div className="select-group">
-              <p className="chu">Môn học:</p>
+            <div>
+              <p className='chu-thong-tin'>Môn học:</p>
               <select 
                 className="combobox" 
                 value={mamon} 
@@ -179,8 +179,8 @@ function ChonMon() {
               </select>
             </div>
             
-            <div className="select-group">
-              <p className="chu">Ngày điểm danh:</p>
+            <div>
+              <p className='chu-thong-tin'>Ngày điểm danh:</p>
               <input
                 type="date"
                 className="combobox"
@@ -192,11 +192,11 @@ function ChonMon() {
           
           <div className="button-form">
             <button 
-              className="button-tao" 
+              className="button" 
               onClick={handleDiemDanh} 
               disabled={loading || !malop || !mamon}
             >
-              {loadingDanhSach ? 'Đang tải...' : 'Điểm Danh'}
+              <span>{loadingDanhSach ? 'Đang tải...' : 'Điểm Danh'}</span>
             </button>
           </div>
         </div>

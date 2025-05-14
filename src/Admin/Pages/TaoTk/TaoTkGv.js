@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SidebarAdmin from '../../SidebarAdmin';
-import './TaoTkGv.css';
+import '../../../TrangCaNhan.css'; 
+import { Eye, EyeOff } from 'lucide-react';
 
 
 function TaoTkGv() {
@@ -13,6 +14,7 @@ function TaoTkGv() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [khoaList, setKhoaList] = useState([]);
+  const [hienMatKhau, setHienMatKhau] = useState(false);
 
   useEffect(() => {
     const fetchKhoaList = async () => {
@@ -112,15 +114,15 @@ function TaoTkGv() {
     <div className="container">
       <div style={{ display: 'flex' }}>
         <SidebarAdmin />
-        <div className="content">
-          <h1>Tạo tài khoản giáo viên</h1>
+        <div className="content-tk">
+          <h1>Tạo tài khoản giảng viên</h1>
           {/* Input ẩn để ngăn tự động điền trên cả form */}
           <input type="text" style={{display: 'none'}} />
           <input type="password" style={{display: 'none'}} />
           <form autoComplete="off">
             <div className='form-tao-tk'>
               <div className='form-trai'>
-                <p className='chu'>Họ tên giáo viên: </p>
+                <p className='chu'>Họ tên giảng viên: </p>
                 <div>
                   <input type="text" style={{display: 'none'}} />
                   <input 
@@ -194,21 +196,22 @@ function TaoTkGv() {
                   />
                 </div>
                 <p className='chu'>Mật khẩu: </p>
-                <div>
-                  <input type="password" style={{display: 'none'}} />
-                  <input 
-                    className='input-tao' 
-                    type='password' 
-                    value={password} 
-                    onChange={(e) => setPassword(e.target.value)} 
-                    autoComplete="new-password" 
+                <div className="input-password input">
+                  <input
+                    type={hienMatKhau ? 'text' : 'password'}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    autoComplete="new-password"
                   />
+                  <span className="icon-eye" onClick={() => setHienMatKhau(!hienMatKhau)}>
+                    {hienMatKhau ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </span>
                 </div>
               </div>
             </div>
           </form>
           <div className='button-form'>
-            <button className='button-tao' onClick={handleSubmit}>Tạo</button>
+            <button className='button' onClick={handleSubmit}><span>Tạo</span></button>
           </div>
         </div>
       </div>

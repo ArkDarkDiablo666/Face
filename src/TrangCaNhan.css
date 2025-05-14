@@ -1,0 +1,364 @@
+.container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    background-color: #F8F3EA !important;
+    color: #3a3a3a;
+    padding: 0 0 0 0px; 
+    position: relative;
+    font-family: 'Gotham', sans-serif;
+  }
+  
+    .form-ca-nhan {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+      margin-top: -20px;
+      
+    }
+  
+  .form-thong-tin {
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px;
+    margin-top: 10px;
+  }
+  
+  .line {
+    border: 1px  solid #3a3a3a;
+    margin: 20px 0;
+    width: 100%;
+  }
+  
+  .form-anh {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+  }
+  
+  .avatar {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%; /* Make avatar circular */
+    border: 1px solid #3a3a3a;
+  
+  }
+  
+  .chu-ca-nhan {
+    font-weight: bold;
+    font-size: 18px;
+    color: #3a3a3a;
+    margin-left: 10px;
+    text-align: left;
+  }
+  
+  .form-chu {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    margin-right: 10px;
+  }
+  
+  .chu-thong-tin {
+    font-size: 18px;
+    margin-left: 10px;
+    font-weight: 400;
+  }
+
+table {
+  width: 155vh;
+  margin: 0 auto;
+  border-collapse: collapse; /* Gộp các đường viền */
+  border: 1px solid #3a3a3a;
+  font-family: 'Gotham', sans-serif;
+}
+
+th, td {
+  padding: 10px; /* Khoảng cách bên trong ô */
+  text-align: left; /* Căn trái cho văn bản */
+  width: 100px;
+  border: 1px solid #3a3a3a;
+  background-color: #fff;
+}
+
+th {
+  background-color: #9ECCFA;
+}
+
+.form-hai-button {
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+  margin-top: -10px;
+}
+
+.button-form-cam {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px; /* Thêm khoảng cách phía trên nếu cần */
+  gap: 20px;
+}
+
+.content-tk{
+  display: flex;
+  flex-direction: column;
+  padding: 20px 10px 10px 20px;
+  gap : 20px;
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+  gap: 50px;
+}
+
+.chu-de {
+  display: flex;
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.icon-table {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  cursor: pointer;
+  overflow: hidden;
+  color: #3a3a3a;
+}
+
+.icon-button {
+  background: none; /* Không có nền */
+  border: none; /* Không có viền */
+  cursor: pointer; /* Con trỏ chuột khi di chuột qua */
+  padding: 0; /* Không có khoảng cách bên trong */
+  display: flex; /* Để căn giữa biểu tượng */
+  align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+.text-button {
+  font-weight: bold;
+  font-size: 16px;
+  color: #3a3a3a;
+  text-align: left;
+}
+
+.back-next {
+  display: flex;
+  flex-direction: row;
+  align-items: right;
+  gap: 10px;
+}
+
+.input-tim {
+  border-radius: 4px;
+  font-size: 15px;
+  width: 50vh;
+  height: 30px;
+  border: 1px solid #b3b3b3fa;
+  font-family: 'Gotham', sans-serif;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 900px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 40px;
+  margin-right: 10px;
+  width: 50vh;
+  height: 30px;
+  border: 1px solid #b3b3b3fa;
+}
+
+.chu {
+  font-weight: bold;
+  font-size: 16px;
+  color: #3a3a3a;
+  margin-left: 10px;
+  text-align: left;
+}
+.radio-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.radio-group label {
+  margin-right: 50px; /* Khoảng cách giữa các radio button */
+  font-size: 15px;
+}
+
+.button-form {
+  margin-top: 15px;
+}
+
+.form-tao-tk {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: -20px;
+}
+
+.form-trai {
+  display: flex;
+  margin-left: 30px;
+  padding: 20px;
+  flex: 1;
+  flex-direction: column;
+}
+
+.form-phai {
+  display: flex;
+  margin-left: 150px;
+  padding: 20px;
+  flex: 1;
+  flex-direction: column;
+}
+
+.input-tao {
+  font-size: 15px;
+  width: 50vh;
+  height: 30px;
+  border: 1px solid #b3b3b3fa;
+  border-radius: 4px;
+  font-family: 'Gotham', sans-serif;
+}
+
+.form-mot {
+  display: flex;
+  margin-left: 30px;
+  padding: 20px;
+  flex: 1;
+  flex-direction: column;
+}
+
+.form-combobox {
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+
+.form-tao-tk {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: -20px;
+}
+
+.form-mot {
+  display: flex;
+  margin-left: 30px;
+  padding: 20px;
+  flex: 1;
+  flex-direction: column;
+}
+
+.button-form-mot {
+  margin-bottom: 200px;
+}
+
+.combobox {
+  width: 260px;
+  height: 40px;
+  border: 1px solid #b3b3b3fa;
+  border-radius: 10px;
+  font-family: 'Gotham', sans-serif;
+  font-size: 15px;  
+}
+
+.form-combox-mon {
+  padding: 10px;
+}
+
+.form-trai-mon {
+  display: flex;
+  margin-left: 30px;
+  padding: 20px;
+  gap: 6px;
+  flex: 1;
+  flex-direction: column;
+}
+
+.form-phai-mon {
+  display: flex;
+  margin-left: 150px;
+  padding: 20px;
+  gap: 5px;
+  flex: 1;
+  flex-direction: column;
+}
+
+.button {
+  outline: none;
+  cursor: pointer;
+  border: none;
+  padding: 0.9rem 2rem;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  position: relative;
+  display: inline-block;
+  letter-spacing: 0.05rem;
+  font-weight: 700;
+  font-size: 17px;
+  border-radius: 500px;
+  overflow: hidden;
+  background: #9ECCFA;
+  color: ghostwhite;
+  font-family: 'Gotham', sans-serif;
+ }
+ 
+ .button span {
+  position: relative;
+  z-index: 10;
+  transition: color 0.4s;
+ }
+ 
+ .button:hover span {
+  color: #3a3a3a;
+ }
+ 
+ .button::before,
+ .button::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+ }
+ 
+ .button::before {
+  content: "";
+  background: #3a3a3a;
+  width: 120%;
+  left: -10%;
+  transform: skew(30deg);
+  transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+ }
+ 
+ .button:hover::before {
+  transform: translate3d(100%, 0, 0);
+ }   
+
+ label {
+  font-family: 'Gotham', sans-serif;
+ }
+
+ .form-table {
+  width: 150vh;
+  height: 90vh;
+ }
